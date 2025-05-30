@@ -1131,3 +1131,138 @@ body.modal-open {
   z-index: 10000;
   overflow: hidden;
 }
+/* Button group and actions styling - Fixed to ensure proper button display */
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+/* Button group for confirm/cancel - Fixed with grid for equal sizing */
+.button-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Equal width columns */
+  gap: 0.75rem;
+  width: 100%;
+}
+
+/* Reset conflicting styles */
+.button-group {
+  flex-direction: unset;
+  justify-content: unset;
+}
+
+/* Common button styles */
+.button-group button,
+.view-results-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 30px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  width: 100%;
+  height: 42px; /* Fixed height for consistency */
+  white-space: nowrap;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Cancel button styling - Updated */
+.cancel-btn {
+  background: linear-gradient(135deg, #ef5350, #e53935);
+  color: white;
+  box-shadow: 0 4px 15px rgba(229, 57, 53, 0.3);
+}
+
+.cancel-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(229, 57, 53, 0.4);
+}
+
+/* Confirm button styling - Updated */
+.confirm-btn {
+  background: linear-gradient(135deg, #42a5f5, #1976d2);
+  color: white;
+  box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+}
+
+.confirm-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+}
+
+/* View Results button styling - Updated */
+.view-results-container {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.view-results-btn {
+  background: linear-gradient(135deg, #8e44ad, #673AB7);
+  color: white;
+  box-shadow: 0 4px 15px rgba(103, 58, 183, 0.3);
+  height: 42px; /* Match height with other buttons */
+}
+
+.view-results-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(103, 58, 183, 0.4);
+}
+
+/* Icon styling in buttons */
+.button-group button .icon,
+.view-results-btn .icon {
+  width: 18px;
+  height: 18px;
+  min-width: 18px; /* Prevent icon from shrinking */
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* Span for button text */
+.button-group button span,
+.view-results-btn span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive adjustments for buttons */
+@media (max-width: 480px) {
+  .button-group {
+    grid-template-columns: 1fr 1fr; /* Keep side by side on mobile */
+  }
+  
+  .button-group button,
+  .view-results-btn {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .button-group button .icon,
+  .view-results-btn .icon {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+  }
+  
+  .button-group button span,
+  .view-results-btn span {
+    font-size: 0.8rem;
+  }
+}
+
+/* Very small screens - stack buttons */
+@media (max-width: 360px) {
+  .button-group {
+    grid-template-columns: 1fr; /* Stack buttons on very small screens */
+  }
+}
