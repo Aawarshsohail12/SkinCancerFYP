@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface PredictionHistory {
-  id: number;
-  user_id: number;
+  id: string;
+  user_id: string;
   image_path: string;
   predicted_class: string;
   predicted_at: string;
@@ -26,7 +26,7 @@ export class PredictionService {
     return this.http.get<PredictionHistory[]>(`${this.apiUrl}/prediction-history`);
   }
 
-    getPredictionById(id: number): Observable<PredictionHistory> {
+  getPredictionById(id: string): Observable<PredictionHistory> {
     return this.http.get<PredictionHistory>(`${this.apiUrl}/prediction/${id}`);
-    }
+  }
 }

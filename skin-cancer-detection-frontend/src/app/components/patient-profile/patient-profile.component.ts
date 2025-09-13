@@ -71,6 +71,13 @@ export class PatientProfileComponent implements OnInit {
     }
   }
 
+  getFormProgress(): number {
+    const totalFields = Object.keys(this.profileForm.controls).length;
+    const filledFields = Object.values(this.profileForm.controls).filter(control => 
+      control.value && control.value.toString().trim() !== ''
+    ).length;
+    return Math.round((filledFields / totalFields) * 100);
+  }
 
   onSubmit() {
     if (this.profileForm.invalid || this.isSubmitting) {

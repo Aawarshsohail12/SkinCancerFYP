@@ -1,7 +1,7 @@
 {
     "build": {
-      "buildCommand": "npm run build -- --configuration=production",
-      "startCommand": "npx serve dist/skin-cancer-detection-frontend/browser"
+      "buildCommand": "npm install && npm run build",
+      "startCommand": "npm start"
     },
     "deploy": {
       "target": "production"
@@ -14,10 +14,10 @@
           "PORT": "8080"
         },
         "build": {
-          "buildCommand": "npm install && npm run build -- --configuration=production",
+          "buildCommand": "npm install && npm run build",
           "outputPath": "dist/skin-cancer-detection-frontend/browser"
         },
-        "startCommand": "npx serve -p 8080 dist/skin-cancer-detection-frontend/browser"
+        "startCommand": "npm start"
       }
     ]
   }

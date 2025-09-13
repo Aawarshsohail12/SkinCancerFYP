@@ -1,94 +1,59 @@
 :host {
   display: block;
-  padding: 2rem;
+  padding: 1.5rem;
   background: linear-gradient(135deg, #141e30, #1a1a2e);
   min-height: 100vh;
 }
 
-/* Container for all cards with 3D perspective */
+/* Modern grid layout for cards */
 :host {
-  perspective: 2000px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* Card main styling with glass morphism and advanced effects */
+/* Clean card styling with subtle effects */
 .appointment-card {
   position: relative;
-  margin-bottom: 2rem;
-  border-radius: 16px;
-  background: rgba(30, 30, 46, 0.7);
+  border-radius: 12px;
+  background: rgba(30, 30, 46, 0.8);
   backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   overflow: hidden;
-  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-  transform-style: preserve-3d;
-  transform: translateZ(0) rotateX(0deg);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: fit-content;
+  min-height: 280px;
 }
 
-/* Incredible hover effect with 3D rotation */
+/* Subtle hover effect */
 .appointment-card:hover {
-  transform: translateY(-10px) translateZ(10px) rotateX(2deg);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
-              0 0 30px rgba(66, 165, 245, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  border-color: rgba(66, 165, 245, 0.3);
 }
 
-/* Create a dynamic floating animation for cards */
-@keyframes floatCard {
-  0% { transform: translateY(0) translateZ(0) rotateX(0deg); }
-  50% { transform: translateY(-5px) translateZ(5px) rotateX(1deg); }
-  100% { transform: translateY(0) translateZ(0) rotateX(0deg); }
-}
-
-/* Apply animation to the cards with staggered delays */
-.appointment-card:nth-child(3n+1) {
-  animation: floatCard 6s ease-in-out infinite;
-}
-
-.appointment-card:nth-child(3n+2) {
-  animation: floatCard 7s ease-in-out infinite 1s;
-}
-
-.appointment-card:nth-child(3n+3) {
-  animation: floatCard 8s ease-in-out infinite 2s;
-}
-
-/* Amazing liquid accent effect */
+/* Simple accent bar at top */
 .card-accent {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 6px;
-  background: linear-gradient(90deg, #42a5f5, #1976d2, #64b5f6);
-  background-size: 200% 100%;
-  animation: gradientShift 5s ease infinite;
+  height: 4px;
+  background: linear-gradient(90deg, #42a5f5, #1976d2);
   z-index: 1;
 }
 
-/* Pending card accent variation with warmer colors */
+/* Pending card accent */
 .pending .card-accent {
-  background: linear-gradient(90deg, #ff9800, #ff5722, #ff9800);
-  background-size: 200% 100%;
-  animation: gradientShift 5s ease infinite;
+  background: linear-gradient(90deg, #ff9800, #ff5722);
 }
 
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Add a glow effect to the accent */
-.card-accent::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: 0;
-  width: 100%;
-  height: 20px;
-  background: inherit;
-  filter: blur(10px);
-  opacity: 0.7;
-  z-index: -1;
+/* Canceled card accent */
+.canceled .card-accent {
+  background: linear-gradient(90deg, #e53935, #ef5350);
 }
 
 /* Main content area */
@@ -96,89 +61,89 @@
   position: relative;
   padding: 1.5rem;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
 }
 
-/* Card header with modern layout */
+/* Card header with clean layout */
 .card-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 1rem;
+  gap: 1rem;
 }
 
 /* Appointment meta information */
 .appointment-meta {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
+  flex: 1;
 }
 
-/* Patient ID with cyberpunk-style design */
+/* Patient ID styling */
 .patient-id {
-  color: rgba(255, 255, 255, 0.7);
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: rgba(66, 165, 245, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
   display: inline-block;
-  border-left: 2px solid #42a5f5;
+  border: 1px solid rgba(66, 165, 245, 0.3);
+  width: fit-content;
 }
 
 .pending .patient-id {
-  border-left-color: #ff9800;
+  background: rgba(255, 152, 0, 0.1);
+  border-color: rgba(255, 152, 0, 0.3);
+  color: rgba(255, 183, 77, 0.9);
 }
 
-/* Appointment date with elegant design */
+.canceled .patient-id {
+  background: rgba(229, 57, 53, 0.1);
+  border-color: rgba(229, 57, 53, 0.3);
+  color: rgba(239, 83, 80, 0.9);
+}
+
+/* Appointment date styling */
 .appointment-date {
   color: #e0e0e0;
-  font-size: 1rem;
-  font-weight: 500;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
-
-/* Add calendar icon before date */
-.appointment-date::before {
-  content: '🗓️';
-  margin-right: 0.4rem;
   font-size: 0.9rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-/* Status pill with dynamic color and effects */
-.status-pill {
+.appointment-date::before {
+  content: '�';
   font-size: 0.85rem;
-  font-weight: 500;
-  padding: 0.35rem 1rem;
+}
+
+/* Status pill with clean design */
+.status-pill {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
   border-radius: 20px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 100px;
-  position: relative;
-  overflow: hidden;
-}
-
-.status-pill::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-  z-index: -1;
+  min-width: 80px;
+  height: fit-content;
+  flex-shrink: 0;
 }
 
 .status-pill.pending {
   background-color: rgba(255, 152, 0, 0.15);
   color: #ffa726;
   border: 1px solid rgba(255, 152, 0, 0.3);
-  animation: pulseOrange 2s infinite;
 }
 
 .status-pill.booked {
@@ -187,393 +152,47 @@
   border: 1px solid rgba(66, 165, 245, 0.3);
 }
 
-@keyframes pulseOrange {
-  0% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(255, 152, 0, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
-}
-
-/* Appointment title with modern typography */
-.appointment-title {
-  color: white;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 1rem 0 1.5rem;
-  position: relative;
-  /* Text gradient effect */
-  background: linear-gradient(90deg, white, #e0e0e0);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Card actions area */
-.card-actions {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: flex-end;
-}
-
-/* Confirm button with advanced effects */
-.confirm-btn {
-  background: linear-gradient(135deg, #42a5f5, #1976d2);
-  color: white;
-  border: none;
-  border-radius: 30px;
-  padding: 0.75rem 1.5rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
-}
-
-/* Create a shimmering effect */
-.confirm-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 150%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transform: skewX(-20deg);
-  transition: all 0.75s ease;
-}
-
-.confirm-btn:hover::before {
-  left: 100%;
-}
-
-.confirm-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
-}
-
-/* Booked badge with celebratory design */
-.booked-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #64b5f6;
-  font-weight: 500;
-  font-size: 0.9rem;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  background-color: rgba(66, 165, 245, 0.1);
-  border: 1px dashed rgba(66, 165, 245, 0.3);
-  position: relative;
-}
-
-/* Add a subtle confetti effect to the booked badge */
-.booked-badge::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 30px;
-  background-image: 
-    radial-gradient(circle, #64b5f6 2px, transparent 2px),
-    radial-gradient(circle, #1976d2 1px, transparent 1px),
-    radial-gradient(circle, #42a5f5 3px, transparent 3px);
-  background-size: 30px 30px;
-  background-position: 0 0, 10px 10px, 20px 5px;
-  filter: opacity(0);
-  animation: confetti 3s forwards;
-}
-
-@keyframes confetti {
-  0% { filter: opacity(0); transform: translateY(-10px) translateX(-50%); }
-  10% { filter: opacity(1); }
-  100% { filter: opacity(0); transform: translateY(10px) translateX(-50%); }
-}
-
-/* SVG icon styling */
-.icon {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
-}
-
-/* Add a notification dot for pending appointments */
-.pending::after {
-  content: '';
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 10px;
-  height: 10px;
-  background-color: #ff9800;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #ff9800;
-  animation: pulse 1.5s infinite;
-  z-index: 10;
-}
-
-@keyframes pulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 152, 0, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
-}
-
-/* Apply a highlight on card click */
-.appointment-card:active {
-  transform: scale(0.98);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Add a signature watermark to each card */
-.appointment-card::after {
-  content: '📅';
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  font-size: 2rem;
-  opacity: 0.1;
-  transform: rotate(-15deg);
-  pointer-events: none;
-}
-
-/* Easter egg: Add hidden message that appears on hover */
-.card-content::before {
-  content: 'Priority Patient';
-  position: absolute;
-  bottom: 0.5rem;
-  left: 1.5rem;
-  color: rgba(255, 255, 255, 0);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: all 0.3s ease;
-}
-
-.appointment-card:hover .card-content::before {
-  color: rgba(255, 255, 255, 0.2);
-}
-
-/* Apply unique patterns to differentiate cards subtly */
-.appointment-card:nth-child(odd) {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-.appointment-card:nth-child(even) {
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.02) 75%, transparent 75%, transparent);
-  background-size: 20px 20px;
-}
-
-/* Responsive designs */
-@media (min-width: 768px) {
-  :host {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 2rem;
-  }
-  
-  .appointment-card {
-    height: 100%;
-    margin-bottom: 0;
-  }
-}
-
-@media (max-width: 767px) {
-  .card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  
-  .status-pill {
-    align-self: flex-start;
-  }
-}
-/* Button group for pending appointments */
-.button-group {
-  display: flex;
-  gap: 1rem;
-  justify-content: flex-end;
-  width: 100%;
-}
-
-/* Cancel button styling */
-.cancel-btn {
-  background: linear-gradient(135deg, #ef5350, #e53935);
-  color: white;
-  border: none;
-  border-radius: 30px;
-  padding: 0.75rem 1.5rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(229, 57, 53, 0.3);
-}
-
-/* Create a shimmering effect */
-.cancel-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 150%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transform: skewX(-20deg);
-  transition: all 0.75s ease;
-}
-
-.cancel-btn:hover::before {
-  left: 100%;
-}
-
-.cancel-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(229, 57, 53, 0.4);
-}
-
-/* Canceled card styling */
-.canceled .card-accent {
-  background: linear-gradient(90deg, #e53935, #ef5350, #e53935);
-  background-size: 200% 100%;
-  animation: gradientShift 5s ease infinite;
-}
-
-/* Status pill for canceled appointments */
 .status-pill.canceled {
   background-color: rgba(229, 57, 53, 0.15);
   color: #ef5350;
   border: 1px solid rgba(229, 57, 53, 0.3);
 }
 
-/* Canceled badge styling */
-.canceled-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #ef5350;
-  font-weight: 500;
-  font-size: 0.9rem;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  background-color: rgba(229, 57, 53, 0.1);
-  border: 1px dashed rgba(229, 57, 53, 0.3);
-  position: relative;
-}
-
-/* Special styling for canceled appointments */
-.canceled .appointment-title {
-  text-decoration: line-through;
-  opacity: 0.7;
-  background: linear-gradient(90deg, #ef5350, #e0e0e0);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.canceled .patient-id {
-  border-left-color: #ef5350;
-}
-
-/* Add a canceled stamp effect */
-.canceled::before {
-  content: "CANCELED";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-25deg);
-  font-size: 3rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: rgba(229, 57, 53, 0.15);
-  border: 4px solid rgba(229, 57, 53, 0.15);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  z-index: 5;
-  pointer-events: none;
-}
-
-/* Less floating animation for canceled appointments */
-.canceled.appointment-card {
-  animation: none !important;
-  transform: translateZ(0) rotateX(0deg);
-  opacity: 0.8;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.canceled.appointment-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-  opacity: 0.9;
-}
-
-/* Make sure both buttons are responsive */
-@media (max-width: 480px) {
-  .button-group {
-    flex-direction: column;
-  }
-  
-  .cancel-btn, .confirm-btn {
-    width: 100%;
-    justify-content: center;
-  }
-}
-/* Add this to your doctor-appointments-cards.component.css file */
-
-/* Pending badge for patients */
-.pending-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #ffb74d;
-  font-weight: 500;
-  font-size: 0.9rem;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  background-color: rgba(255, 152, 0, 0.1);
-  border: 1px dashed rgba(255, 152, 0, 0.3);
-  position: relative;
-  animation: pulse 2s infinite;
-}
-
-.pending-badge .icon {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
-}
-
-@keyframes pulse {
-  0% { opacity: 0.8; }
-  50% { opacity: 1; }
-  100% { opacity: 0.8; }
-}
-/* Add this to your doctor-appointments-cards.component.css file */
-
-/* View Results Button */
-.view-results-container {
-  margin-top: 1rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.view-results-btn {
-  background: linear-gradient(135deg, #8e44ad, #673AB7);
+/* Appointment title */
+.appointment-title {
   color: white;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0.75rem 0 1rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Card actions area */
+.card-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Button group for confirm/cancel actions */
+.button-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+/* Common button styles */
+.cancel-btn,
+.confirm-btn,
+.view-results-btn {
   border: none;
-  border-radius: 30px;
-  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
   font-size: 0.9rem;
   font-weight: 500;
   display: flex;
@@ -583,34 +202,174 @@
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
-  box-shadow: 0 4px 15px rgba(103, 58, 183, 0.3);
+  height: 44px;
+  color: white;
+  text-decoration: none;
+}
+
+/* Cancel button */
+.cancel-btn {
+  background: linear-gradient(135deg, #ef5350, #e53935);
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
+}
+
+.cancel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(229, 57, 53, 0.4);
+}
+
+/* Confirm button */
+.confirm-btn {
+  background: linear-gradient(135deg, #42a5f5, #1976d2);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+.confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
+}
+
+/* View results button */
+.view-results-container {
+  width: 100%;
+}
+
+.view-results-btn {
+  background: linear-gradient(135deg, #8e44ad, #673AB7);
+  box-shadow: 0 4px 12px rgba(103, 58, 183, 0.3);
 }
 
 .view-results-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(103, 58, 183, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(103, 58, 183, 0.4);
 }
 
-.view-results-btn .icon {
-  width: 20px;
-  height: 20px;
+/* Badge styling for different states */
+.pending-badge,
+.booked-badge,
+.canceled-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  width: 100%;
+  justify-content: center;
+}
+
+.pending-badge {
+  color: #ffb74d;
+  background-color: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.booked-badge {
+  color: #64b5f6;
+  background-color: rgba(66, 165, 245, 0.1);
+  border: 1px solid rgba(66, 165, 245, 0.3);
+}
+
+.canceled-badge {
+  color: #ef5350;
+  background-color: rgba(229, 57, 53, 0.1);
+  border: 1px solid rgba(229, 57, 53, 0.3);
+}
+
+/* Icon styling */
+.icon {
+  width: 18px;
+  height: 18px;
   fill: currentColor;
+  flex-shrink: 0;
 }
 
+/* Canceled appointment styling */
+.canceled .appointment-title {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.canceled .appointment-card {
+  opacity: 0.85;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  :host {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .status-pill {
+    align-self: flex-start;
+    min-width: 70px;
+  }
+  
+  .appointment-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    padding: 0.75rem;
+  }
+  
+  .card-content {
+    padding: 1.25rem;
+    min-height: 240px;
+  }
+  
+  .button-group {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  
+  .cancel-btn,
+  .confirm-btn,
+  .view-results-btn {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.85rem;
+    height: 40px;
+  }
+  
+  .icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+  .button-group {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
 /* Modal Styling */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(5px);
+  z-index: 9999;
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1000;
-  padding: 1.5rem;
+  justify-content: center;
   animation: fadeIn 0.3s ease;
 }
 
@@ -620,17 +379,17 @@
 }
 
 .modal-container {
-  background: linear-gradient(135deg, #1e1e2e, #141e30);
-  border-radius: 16px;
+  position: relative;
   width: 90%;
   max-width: 900px;
   max-height: 90vh;
+  background: linear-gradient(135deg, #1e1e2e, #141e30);
+  border-radius: 16px;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  position: relative;
   animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
 }
 
 @keyframes modalAppear {
@@ -644,6 +403,7 @@
   align-items: center;
   padding: 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: move;
 }
 
 .modal-header h2 {
@@ -651,7 +411,6 @@
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
-  letter-spacing: 0.5px;
 }
 
 .close-button {
@@ -672,17 +431,13 @@
   color: white;
 }
 
-.close-button svg {
-  fill: currentColor;
-}
-
 .modal-content {
   padding: 1.5rem;
   overflow-y: auto;
   max-height: calc(90vh - 70px);
 }
 
-/* Prediction Details in Modal */
+/* Prediction details in modal */
 .prediction-details {
   display: grid;
   grid-template-columns: minmax(300px, 40%) 1fr;
@@ -703,24 +458,6 @@
   object-fit: cover;
 }
 
-.image-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at center, transparent 70%, rgba(66, 165, 245, 0.3) 100%);
-  pointer-events: none;
-}
-
-.image-overlay.benign {
-  background: radial-gradient(circle at center, transparent 70%, rgba(76, 175, 80, 0.3) 100%);
-}
-
-.image-overlay.malignant {
-  background: radial-gradient(circle at center, transparent 70%, rgba(244, 67, 54, 0.3) 100%);
-}
-
 .result-details {
   display: flex;
   flex-direction: column;
@@ -738,7 +475,6 @@
   font-weight: 700;
   color: white;
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .status-badge {
@@ -747,7 +483,6 @@
   font-size: 0.9rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 .status-badge.benign {
@@ -760,12 +495,6 @@
   background-color: rgba(244, 67, 54, 0.15);
   color: #e57373;
   border: 1px solid rgba(244, 67, 54, 0.3);
-}
-
-.status-badge.uncertain {
-  background-color: rgba(255, 152, 0, 0.15);
-  color: #ffb74d;
-  border: 1px solid rgba(255, 152, 0, 0.3);
 }
 
 .prediction-description {
@@ -795,7 +524,6 @@
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) inset;
 }
 
 .confidence-bar {
@@ -813,7 +541,6 @@
   color: white;
   font-size: 0.85rem;
   font-weight: 700;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .prediction-meta {
@@ -839,7 +566,7 @@
   color: #e0e0e0;
 }
 
-/* Loading State */
+/* Loading and error states */
 .modal-content.loading {
   display: flex;
   flex-direction: column;
@@ -863,38 +590,7 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Error State */
-.modal-content.error {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  text-align: center;
-}
-
-.error-icon {
-  fill: #ef5350;
-  margin-bottom: 1.5rem;
-}
-
-.retry-button {
-  margin-top: 1.5rem;
-  background-color: #42a5f5;
-  color: white;
-  border: none;
-  border-radius: 30px;
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.retry-button:hover {
-  background-color: #1976d2;
-}
-
-/* Responsive Design */
+/* Modal responsive design */
 @media (max-width: 768px) {
   .prediction-details {
     grid-template-columns: 1fr;
@@ -903,366 +599,13 @@
   .image-container {
     max-height: 300px;
   }
-}
-/* Fixed Modal Styling - Complete rework for perfect positioning */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  animation: fadeIn 0.3s ease;
-  overflow: hidden;
-}
-
-.modal-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 900px;
-  max-height: 90vh;
-  background: linear-gradient(135deg, #1e1e2e, #141e30);
-  border-radius: 16px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  overflow: hidden;
-}
-
-.modal-header {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-  height: 60px;
-}
-
-.modal-content {
-  padding: 1.5rem;
-  overflow-y: auto;
-  max-height: calc(90vh - 60px);
-}
-
-/* Improve scrollbar for modal content */
-.modal-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.modal-content::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-}
-
-.modal-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-}
-
-.modal-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-/* Fix for loading state to center properly */
-.modal-content.loading,
-.modal-content.error {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 400px;
-  max-height: calc(90vh - 60px);
-}
-
-/* Ensure the modal disappears when closed */
-.modal-overlay.hidden {
-  display: none;
-}
-
-/* Fix to prevent body scrolling when modal is open */
-body.modal-open {
-  overflow: hidden;
-  height: 100vh;
-}
-
-/* Additional fixes for mobile devices */
-@media (max-width: 480px) {
+  
   .modal-container {
     width: 95%;
     max-height: 85vh;
   }
   
-  .modal-header {
-    height: 50px;
-    padding: 0.75rem;
-  }
-  
   .modal-content {
     padding: 1rem;
-    max-height: calc(85vh - 50px);
-  }
-}
-/* Modal Styling - Fixed to always center in viewport */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-container {
-  width: 90%;
-  max-width: 900px;
-  max-height: 90vh;
-  background: linear-gradient(135deg, #1e1e2e, #141e30);
-  border-radius: 16px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-}
-/* Modal Styling - Centered and Draggable */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.modal-container {
-  position: absolute;
-  width: 90%;
-  max-width: 900px;
-  max-height: 85vh;
-  background: linear-gradient(135deg, #1e1e2e, #141e30);
-  border-radius: 16px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  cursor: move; /* Indicates the modal is draggable */
-  z-index: 10000;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  flex: 0 0 auto;
-  cursor: move; /* Reinforces draggable indication */
-}
-
-.modal-content {
-  flex: 1;
-  padding: 1.5rem;
-  overflow-y: auto;
-  max-height: calc(85vh - 70px); /* 70px accounts for header */
-  cursor: default; /* Reset cursor for content area */
-}
-
-/* Add grab cursor on hover for better UX */
-.modal-header:hover {
-  cursor: grab;
-}
-
-.modal-header:active {
-  cursor: grabbing;
-}
-/* Modal Styling - Centered positioning regardless of scroll */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.modal-container {
-  position: absolute;
-  width: 90%;
-  max-width: 900px;
-  max-height: 85vh;
-  background: linear-gradient(135deg, #1e1e2e, #141e30);
-  border-radius: 16px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  /* Start with no transform to let it be centered by flexbox */
-  transform: translate(0px, 0px);
-  z-index: 10000;
-  overflow: hidden;
-}
-/* Button group and actions styling - Fixed to ensure proper button display */
-.card-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  width: 100%;
-}
-
-/* Button group for confirm/cancel - Fixed with grid for equal sizing */
-.button-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Equal width columns */
-  gap: 0.75rem;
-  width: 100%;
-}
-
-/* Reset conflicting styles */
-.button-group {
-  flex-direction: unset;
-  justify-content: unset;
-}
-
-/* Common button styles */
-.button-group button,
-.view-results-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 30px;
-  padding: 0.75rem 1rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  border: none;
-  width: 100%;
-  height: 42px; /* Fixed height for consistency */
-  white-space: nowrap;
-  cursor: pointer;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Cancel button styling - Updated */
-.cancel-btn {
-  background: linear-gradient(135deg, #ef5350, #e53935);
-  color: white;
-  box-shadow: 0 4px 15px rgba(229, 57, 53, 0.3);
-}
-
-.cancel-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(229, 57, 53, 0.4);
-}
-
-/* Confirm button styling - Updated */
-.confirm-btn {
-  background: linear-gradient(135deg, #42a5f5, #1976d2);
-  color: white;
-  box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
-}
-
-.confirm-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
-}
-
-/* View Results button styling - Updated */
-.view-results-container {
-  margin-top: 0.5rem;
-  width: 100%;
-}
-
-.view-results-btn {
-  background: linear-gradient(135deg, #8e44ad, #673AB7);
-  color: white;
-  box-shadow: 0 4px 15px rgba(103, 58, 183, 0.3);
-  height: 42px; /* Match height with other buttons */
-}
-
-.view-results-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(103, 58, 183, 0.4);
-}
-
-/* Icon styling in buttons */
-.button-group button .icon,
-.view-results-btn .icon {
-  width: 18px;
-  height: 18px;
-  min-width: 18px; /* Prevent icon from shrinking */
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-/* Span for button text */
-.button-group button span,
-.view-results-btn span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* Responsive adjustments for buttons */
-@media (max-width: 480px) {
-  .button-group {
-    grid-template-columns: 1fr 1fr; /* Keep side by side on mobile */
-  }
-  
-  .button-group button,
-  .view-results-btn {
-    padding: 0.6rem 0.5rem;
-    font-size: 0.85rem;
-  }
-  
-  .button-group button .icon,
-  .view-results-btn .icon {
-    width: 16px;
-    height: 16px;
-    min-width: 16px;
-  }
-  
-  .button-group button span,
-  .view-results-btn span {
-    font-size: 0.8rem;
-  }
-}
-
-/* Very small screens - stack buttons */
-@media (max-width: 360px) {
-  .button-group {
-    grid-template-columns: 1fr; /* Stack buttons on very small screens */
   }
 }

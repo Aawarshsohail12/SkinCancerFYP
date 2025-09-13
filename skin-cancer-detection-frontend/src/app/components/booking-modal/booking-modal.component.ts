@@ -51,6 +51,10 @@ export class BookingModalComponent {
     private route: ActivatedRoute,
     private authService: AuthService // Inject AuthService for user ID
   ) {
+    console.log('BookingModalComponent constructor - data received:', this.data);
+    console.log('Doctor ID from data:', this.data?.doctorId);
+    console.log('Route params:', this.route.snapshot.params);
+    
     this.modalForm = this.fb.group({
       date_time: ['', Validators.required],
       notes: [''] // Add notes to the FormGroup
@@ -66,8 +70,13 @@ export class BookingModalComponent {
     this.isSubmitting = true;
   
     const doctorId = this.data.doctorId || this.route.snapshot.params['id'];
-    if (isNaN(doctorId)) {
-      console.error('Invalid doctor ID:', this.route.snapshot.params['id']);
+    console.log('onConfirm - data.doctorId:', this.data.doctorId);
+    console.log('onConfirm - route params id:', this.route.snapshot.params['id']);
+    console.log('onConfirm - final doctorId:', doctorId);
+    
+    // Check if doctorId is a valid string (MongoDB ObjectId format)
+    if (!doctorId || typeof doctorId !== 'string' || doctorId.trim().length === 0) {
+      console.error('Invalid doctor ID:', doctorId);
         this.snackBar.open('Invalid doctor ID. Please try again.', 'Close', {
           duration: 3000
         });
@@ -76,7 +85,7 @@ export class BookingModalComponent {
     }
   
     const appointmentData = {
-      patient_id: this.authService.getCurrentUserId() || 0,
+      patient_id: this.authService.getCurrentUserId() || '',
       doctor_id: doctorId,
       date_time: this.modalForm.value.date_time ? new Date(this.modalForm.value.date_time).toISOString() : '',
       notes: this.modalForm.value.notes || ''

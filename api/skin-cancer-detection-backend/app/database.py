@@ -1,21 +1,17 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-
+from motor.motor_asyncio import AsyncIOMotorClient
 from app.config import settings
 
-SQLALCHEMY_DATABASE_URL = f"sqlite:///./{settings.database_name}"
+client: AsyncIOMotorClient = None
+db = None
 
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+async def connect_to_mongo():
+    global client, db
+    client = AsyncIOMotorClient(settings.MONGO_URI)
+    db = client[settings.MONGO_DB_NAME]
 
-Base = declarative_base()
+async def close_mongo_connection():
+    if client:
+        client.close()
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+def get_collection(name: str):
+    return db[name]

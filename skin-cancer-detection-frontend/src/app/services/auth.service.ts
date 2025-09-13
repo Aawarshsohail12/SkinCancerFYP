@@ -10,7 +10,7 @@ interface LoginResponse {
   token_type: string;
   email: string;
   role: string;
-  user_id: number;
+  user_id: string;  // Changed to string for MongoDB ObjectId
 }
 
 interface VerificationResponse {
@@ -25,7 +25,7 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private userEmailSubject = new BehaviorSubject<string | null>(null);
   private userRoleSubject = new BehaviorSubject<string | null>(null);
-  private userIdSubject = new BehaviorSubject<number | null>(null);
+  private userIdSubject = new BehaviorSubject<string | null>(null);  // Changed to string
   private token: string | null = null;
   private isBrowser: boolean;
   private pendingRegistration: { email: string, password: string, role: string } | null = null;
@@ -52,7 +52,7 @@ export class AuthService {
     return this.userRoleSubject.asObservable();
   }
 
-  get userId$(): Observable<number | null> {
+  get userId$(): Observable<string | null> {  // Changed to string
     return this.userIdSubject.asObservable();
   }
 
@@ -66,17 +66,17 @@ export class AuthService {
       this.isAuthenticatedSubject.next(!!this.token);
       this.userEmailSubject.next(email);
       this.userRoleSubject.next(role);
-      this.userIdSubject.next(userId ? parseInt(userId) : null);
+      this.userIdSubject.next(userId);  // No need to parse as int
     }
   }
 
-  private setAuthState(token: string, email: string, role: string, userId: number): void {
+  private setAuthState(token: string, email: string, role: string, userId: string): void {  // Changed to string
     this.token = token;
     if (this.isBrowser) {
       localStorage.setItem('access_token', token);
       localStorage.setItem('user_email', email);
       localStorage.setItem('user_role', role);
-      localStorage.setItem('user_id', userId.toString());
+      localStorage.setItem('user_id', userId);  // Store as string
     }
     this.isAuthenticatedSubject.next(true);
     this.userEmailSubject.next(email);
@@ -164,7 +164,7 @@ export class AuthService {
     return this.userRoleSubject.value;
   }
 
-  getCurrentUserId(): number | null {
+  getCurrentUserId(): string | null {  // Changed to string
     return this.userIdSubject.value;
   }
 }

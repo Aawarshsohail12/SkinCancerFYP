@@ -9,14 +9,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { emailValidator } from '../validators/email.validator';
 import { EmailVerificationService } from '../../../services/email-verification.service';
 import { MatDialog } from '@angular/material/dialog';
 import { VerifyEmailComponent } from '../verify-email/verify-email.component';
-import { MatSelectModule } from '@angular/material/select'; // Add this import
+import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon'; // Add this import
 
 @Component({
   selector: 'app-register',
@@ -24,10 +25,12 @@ import { MatOptionModule } from '@angular/material/core';
   styleUrls: ['./register.component.css'],
   standalone: true,
   imports: [
+    MatIconModule, // Add this import
     MatOptionModule,
     RouterModule,
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -39,6 +42,8 @@ import { MatOptionModule } from '@angular/material/core';
 export class RegisterComponent {
   registerForm!: FormGroup
   isLoading = false;
+  hidePassword = true;
+  acceptTerms = false;
 
   constructor(
     private fb: FormBuilder,

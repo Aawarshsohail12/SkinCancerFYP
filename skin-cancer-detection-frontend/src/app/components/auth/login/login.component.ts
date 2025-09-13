@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
     RouterModule,
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -34,6 +35,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isLoading = false;
   returnUrl!: string;
+  hidePassword = true;
+  rememberMe = false;
 
   constructor(
     private fb: FormBuilder,

@@ -90,6 +90,17 @@ export class DoctorProfileComponent implements OnInit {
     }
   }
 
+  getFormProgress(): number {
+    const controls = this.profileForm.controls;
+    const totalFields = Object.keys(controls).length;
+    const filledFields = Object.keys(controls).filter(key => {
+      const control = controls[key];
+      return control.value && control.value.toString().trim() !== '';
+    }).length;
+    
+    return Math.round((filledFields / totalFields) * 100);
+  }
+
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files![0];
     if (!file) return;

@@ -1,130 +1,217 @@
 <div class="profile-container">
-    <mat-card class="profile-card">
-      <div class="card-header">
-        <div class="header-content">
-          <h1 class="card-title">Complete Your Professional Profile</h1>
-          <p class="card-subtitle">Elevate your medical presence with detailed credentials</p>
-          <div class="header-decoration"></div>
+  <!-- Background Elements -->
+  <div class="background-decoration"></div>
+  <div class="floating-element floating-1"></div>
+  <div class="floating-element floating-2"></div>
+  
+  <!-- Main Profile Card -->
+  <div class="modern-profile-card">
+    <!-- Header Section -->
+    <div class="profile-header">
+      <div class="header-background"></div>
+      <div class="header-content">
+        <div class="brand-section">
+          <div class="app-icon">
+            <mat-icon>health_and_safety</mat-icon>
+          </div>
+          <div class="brand-text">
+            <h1>SkinAI</h1>
+            <p>AI-Powered Detection</p>
+          </div>
         </div>
-        <div class="profile-icon">
-          <mat-icon>medical_services</mat-icon>
+        <div class="profile-info">
+          <h2>Complete Your Professional Profile</h2>
+          <p>Enhance your medical presence with detailed credentials</p>
         </div>
       </div>
-  
-      <mat-card-content>
-        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-          <!-- Profile Image Section -->
-          <div class="form-section">
-            <h3 class="section-title">Profile Image</h3>
-            <div class="image-upload-container">
-              <div class="image-preview" *ngIf="imagePreview">
-                <img [src]="imagePreview" alt="Profile Preview">
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-section">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="getFormProgress()"></div>
+      </div>
+      <p class="progress-text">{{ getFormProgress() }}% Complete</p>
+    </div>
+
+    <!-- Form Content -->
+    <div class="form-content">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Profile Image Section -->
+        <div class="form-section image-section">
+          <div class="section-header">
+            <div class="section-icon">
+              <mat-icon>photo_camera</mat-icon>
+            </div>
+            <div class="section-title-group">
+              <h3>Profile Photo</h3>
+              <p>Add a professional photo</p>
+            </div>
+          </div>
+
+          <div class="image-upload-area">
+            <div class="image-preview" *ngIf="imagePreview">
+              <img [src]="imagePreview" alt="Profile Preview">
+              <div class="image-overlay">
                 <button mat-icon-button class="remove-image" (click)="removeImage()">
                   <mat-icon>close</mat-icon>
                 </button>
               </div>
-              
-              <div class="upload-area" *ngIf="!imagePreview">
-                <input type="file" #fileInput accept="image/*" (change)="onImagePicked($event)" hidden>
-                <button mat-raised-button type="button" (click)="fileInput.click()" class="upload-button">
-                  <mat-icon>add_photo_alternate</mat-icon>
-                  Upload Profile Photo
-                </button>
-                <p class="upload-hint">JPG or PNG, max 2MB</p>
+            </div>
+            
+            <div class="upload-zone" *ngIf="!imagePreview">
+              <input type="file" #fileInput accept="image/*" (change)="onImagePicked($event)" hidden>
+              <div class="upload-content" (click)="fileInput.click()">
+                <mat-icon>add_photo_alternate</mat-icon>
+                <h4>Upload Profile Photo</h4>
+                <p>JPG or PNG, max 2MB</p>
               </div>
             </div>
           </div>
-  
-          <!-- Professional Information Section -->
-          <div class="form-section">
-            <h3 class="section-title">Professional Information</h3>
+        </div>
 
-            <mat-form-field appearance="fill" class="elevated-field">
-                <mat-label>Full Name</mat-label>
-                <input matInput formControlName="user_name" required>
-                <mat-icon matSuffix>person</mat-icon>
-                <mat-error *ngIf="userNameControl?.hasError('required')">
-                  Full name is required
-                </mat-error>
-              </mat-form-field>
-              
-            
-            <mat-form-field appearance="fill" class="elevated-field">
-              <mat-label>Medical Specialty</mat-label>
-              <mat-select formControlName="specialty" required>
-                <mat-option *ngFor="let spec of specialties" [value]="spec">
-                  {{ spec }}
-                </mat-option>
-              </mat-select>
-              <mat-icon matSuffix>arrow_drop_down</mat-icon>
-              <mat-error *ngIf="specialtyControl?.hasError('required')">
-                Specialty selection is required
-              </mat-error>
-            </mat-form-field>
-  
-            <mat-form-field appearance="fill" class="elevated-field">
-              <mat-label>Hospital/Clinic Affiliation</mat-label>
-              <input matInput formControlName="hospital" required>
-              <mat-icon matSuffix>local_hospital</mat-icon>
-              <mat-error *ngIf="hospitalControl?.hasError('required')">
-                Please enter your primary practice location
-              </mat-error>
-            </mat-form-field>
-  
-            <mat-form-field appearance="fill" class="elevated-field">
-              <mat-label>Years of Clinical Experience</mat-label>
-              <input matInput type="number" formControlName="years_experience" min="0" required>
-              <mat-icon matSuffix>work_outline</mat-icon>
-              <mat-error *ngIf="yearsExperienceControl?.hasError('required')">
-                This field is required
-              </mat-error>
-              <mat-error *ngIf="yearsExperienceControl?.hasError('min')">
-                Experience cannot be negative
-              </mat-error>
-            </mat-form-field>
-          </div>
-  
-          <!-- Contact Information Section -->
-          <div class="form-section">
-            <h3 class="section-title">Contact Information</h3>
-            
-            <mat-form-field appearance="fill" class="elevated-field">
-              <mat-label>Contact Number</mat-label>
-              <input matInput type="tel" formControlName="contact" required>
-              <mat-icon matSuffix>contact_phone</mat-icon>
-              <mat-hint>Include country code if applicable</mat-hint>
-              <mat-error *ngIf="contactControl?.hasError('required')">
-                Contact number is mandatory
-              </mat-error>
-              <mat-error *ngIf="contactControl?.hasError('pattern')">
-                Please enter a valid phone number
-              </mat-error>
-            </mat-form-field>
-          </div>
-  
-          <!-- Form Actions -->
-          <div class="form-actions">
-            <button 
-              mat-raised-button 
-              class="submit-button"
-              type="submit"
-              [disabled]="profileForm.invalid || isSubmitting">
-              <span *ngIf="!isSubmitting">Complete Profile</span>
-              <span *ngIf="isSubmitting">
-                <mat-spinner diameter="20"></mat-spinner>
-                Processing...
-              </span>
-            </button>
-          </div>
-  
-          <!-- Error Message -->
-          <div *ngIf="errorMessage" class="error-message">
-            <div class="error-content">
-              <mat-icon class="error-icon">error_outline</mat-icon>
-              <div class="error-text">{{ errorMessage }}</div>
+        <!-- Professional Information Section -->
+        <div class="form-section professional-info">
+          <div class="section-header">
+            <div class="section-icon">
+              <mat-icon>medical_services</mat-icon>
+            </div>
+            <div class="section-title-group">
+              <h3>Professional Information</h3>
+              <p>Your medical credentials and experience</p>
             </div>
           </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
+
+          <div class="form-grid">
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" class="modern-field">
+                <mat-label>Full Name</mat-label>
+                <input matInput formControlName="user_name" required>
+                <mat-icon matSuffix>person_outline</mat-icon>
+                <mat-error *ngIf="userNameControl?.hasError('required')">
+                  Please enter your full name
+                </mat-error>
+              </mat-form-field>
+            </div>
+            
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" class="modern-field">
+                <mat-label>Medical Specialty</mat-label>
+                <mat-select formControlName="specialty" required>
+                  <mat-option *ngFor="let spec of specialties" [value]="spec">
+                    {{ spec }}
+                  </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>local_hospital</mat-icon>
+                <mat-error *ngIf="specialtyControl?.hasError('required')">
+                  Please select your specialty
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" class="modern-field">
+                <mat-label>Hospital/Clinic Affiliation</mat-label>
+                <input matInput formControlName="hospital" required>
+                <mat-icon matSuffix>business</mat-icon>
+                <mat-error *ngIf="hospitalControl?.hasError('required')">
+                  Please enter your primary practice location
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" class="modern-field">
+                <mat-label>Years of Experience</mat-label>
+                <input matInput type="number" formControlName="years_experience" min="0" required>
+                <mat-icon matSuffix>work_outline</mat-icon>
+                <mat-error *ngIf="yearsExperienceControl?.hasError('required')">
+                  This field is required
+                </mat-error>
+                <mat-error *ngIf="yearsExperienceControl?.hasError('min')">
+                  Experience cannot be negative
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="form-section contact-info">
+          <div class="section-header">
+            <div class="section-icon">
+              <mat-icon>contact_phone</mat-icon>
+            </div>
+            <div class="section-title-group">
+              <h3>Contact Information</h3>
+              <p>How patients can reach you</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field-wrapper full-width">
+              <mat-form-field appearance="outline" class="modern-field">
+                <mat-label>Contact Number</mat-label>
+                <input matInput type="tel" formControlName="contact" required placeholder="+1 (555) 123-4567">
+                <mat-icon matSuffix>phone</mat-icon>
+                <mat-hint>Include country code for international numbers</mat-hint>
+                <mat-error *ngIf="contactControl?.hasError('required')">
+                  Please enter your contact number
+                </mat-error>
+                <mat-error *ngIf="contactControl?.hasError('pattern')">
+                  Please enter a valid phone number
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Notice -->
+        <div class="professional-notice">
+          <div class="notice-icon">
+            <mat-icon>verified</mat-icon>
+          </div>
+          <div class="notice-content">
+            <h4>Professional Verification</h4>
+            <p>Your credentials will be verified by our medical team before approval. This ensures the highest standard of care for our patients.</p>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button 
+            mat-flat-button 
+            class="modern-submit-btn"
+            type="submit"
+            [disabled]="profileForm.invalid || isSubmitting">
+            <div class="btn-content">
+              <mat-icon *ngIf="!isSubmitting">medical_services</mat-icon>
+              <mat-spinner diameter="20" *ngIf="isSubmitting"></mat-spinner>
+              <span>{{ isSubmitting ? 'Setting Up Profile...' : 'Complete Professional Profile' }}</span>
+            </div>
+          </button>
+          
+          <div class="action-info">
+            <mat-icon>info_outline</mat-icon>
+            <span>Profile information can be updated anytime in settings</span>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="error-alert">
+          <div class="alert-icon">
+            <mat-icon>error_outline</mat-icon>
+          </div>
+          <div class="alert-content">
+            <h4>Unable to Save Profile</h4>
+            <p>{{ errorMessage }}</p>
+          </div>
+          <button mat-icon-button class="alert-close" (click)="errorMessage = null">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
+</div>

@@ -34,23 +34,23 @@ export class AppointmentService {
   }
 
   // Get appointments between a specific patient and doctor
-  getPatientDoctorAppointments(patientId: number, doctorId: number): Observable<Appointment[]> {
+  getPatientDoctorAppointments(patientId: string, doctorId: string): Observable<Appointment[]> {  // Changed to string
     return this.http.get<Appointment[]>(
       `${this.apiUrl}?patient_id=${patientId}&doctor_id=${doctorId}`
     );
   }
 
   // Get all appointments for current patient
-  getPatientAppointments(patientId: number): Observable<Appointment[]> {
+  getPatientAppointments(patientId: string): Observable<Appointment[]> {  // Changed to string
     return this.http.get<Appointment[]>(`${this.apiUrl}/patient/${patientId}`);
   }
 
-  getDoctorAppointments(doctorId: number): Observable<Appointment[]> {
+  getDoctorAppointments(doctorId: string): Observable<Appointment[]> {  // Changed to string
     return this.http.get<Appointment[]>(`${this.apiUrl}/doctor/${doctorId}`);
   }
 
   // Update an appointment
-  updateAppointmentStatus(appointmentId: number, status: string) {
+  updateAppointmentStatus(appointmentId: string, status: string) {  // Changed to string
     return this.http.patch<Appointment>(
       `${this.apiUrl}/${appointmentId}/status`,
       { status: status }  // Explicit property name
@@ -58,7 +58,7 @@ export class AppointmentService {
   }
 
   // Cancel an appointment
-  cancelAppointment(id: number): Observable<Appointment> {
+  cancelAppointment(id: string): Observable<Appointment> {  // Changed to string
     return this.http.patch<Appointment>(`${this.apiUrl}/${id}/cancel`, {});
   }
 }

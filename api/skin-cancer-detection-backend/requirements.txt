@@ -13,17 +13,18 @@ efficientnet>=1.1.1
 # FastAPI and web server
 fastapi>=0.95.0
 uvicorn>=0.15.0
-pydantic>=2.0.0
+pydantic[email]>=2.0.0
 pydantic_settings>=2.0.0
-pydantic[email]
+email-validator>=2.0.0
 
 # Authentication and security
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 python-multipart==0.0.6
 
-# Database
-sqlalchemy==2.0.16
+# MongoDB
+motor>=3.3.0
+pymongo>=4.5.0
 
 # Configuration
 python-dotenv==1.0.0

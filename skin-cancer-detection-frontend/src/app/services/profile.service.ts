@@ -13,7 +13,7 @@ export class ProfileService {
 
 
   completeProfile(
-    userId: number, 
+    userId: string,  // Changed to string
     profileData: any, 
     role: string,
     profileImage?: File
@@ -46,12 +46,12 @@ export class ProfileService {
   }
   
   
-  getDoctorProfile(userId: number): Observable<any> {
+  getDoctorProfile(userId: string): Observable<any> {  // Changed to string
     return this.http.get(
         `${this.apiUrl}/doctordetails/${userId}`
     )
   }
-  getPatientProfile(userId: number): Observable<any> {
+  getPatientProfile(userId: string): Observable<any> {  // Changed to string
     return this.http.get(
         `${this.apiUrl}/patientdetails/${userId}`
     )

@@ -1,7 +1,7 @@
 // appointment.model.ts
 export interface AppointmentBase {
-    patient_id: number;
-    doctor_id: number;
+    patient_id: string;
+    doctor_id: string;
     date_time: string;
     notes?: string;
   }
@@ -11,16 +11,16 @@ export interface AppointmentBase {
   }
   
   export interface Appointment extends AppointmentBase {
-    appointment_id: number;
-    patient_id: number;
+    _id: string;  // MongoDB ObjectId as string
+    patient_id: string;
     status: 'pending' | 'book' | 'rate' | 'cancel';
     doctor: Doctor;
     patient: Patient;
-    prediction_id?: number;
+    prediction_id?: string;
   }
   
   export interface Doctor {
-    id: number;
+    id: string;
     user_name: string;
     specialty: string;
     hospital: string;
@@ -32,7 +32,7 @@ export interface AppointmentBase {
   }
   
   export interface Patient {
-    id: number;
+    id: string;
     user_name: string;
     // Add other patient fields as needed
   }

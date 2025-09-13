@@ -43,4 +43,9 @@ export class ResultsDisplayComponent implements OnInit {
   uploadNew(): void {
     this.newUpload.emit();
   }
+
+  logDoctorId(doctor: any): void {
+    console.log('Doctor object:', doctor);
+    console.log('Doctor ID:', doctor._id);
+  }
 }

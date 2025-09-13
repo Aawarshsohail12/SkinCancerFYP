@@ -14,14 +14,14 @@ export class RatingService {
   constructor(private http: HttpClient) { }
 
   // Submit a rating for an appointment
-  submitRating(appointment_id: number, rating: number): Observable<number> {
+  submitRating(appointment_id: string, rating: number): Observable<number> {  // Changed to string
     return this.http.post<number>(`${this.apiUrl}/set_rating`, { appointment_id, rating });
   }
 
   // Check if a patient has already rated an appointment
-  hasRated(appointmentId: number): Observable<boolean> {
+  hasRated(appointmentId: string): Observable<boolean> {  // Changed to string
     // Validate input
-    if (!appointmentId || isNaN(appointmentId)) {
+    if (!appointmentId) {
       return throwError(() => new Error('Invalid appointment ID'));
     }
   

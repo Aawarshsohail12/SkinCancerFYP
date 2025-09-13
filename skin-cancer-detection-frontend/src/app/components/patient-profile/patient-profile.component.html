@@ -1,85 +1,158 @@
 <div class="profile-container">
-    <mat-card class="profile-card">
-      <div class="card-header">
-        <div class="header-content">
-          <h1 class="card-title">Complete Your Profile</h1>
-          <div class="header-decoration"></div>
+  <!-- Background Elements -->
+  <div class="background-decoration"></div>
+  <div class="floating-element floating-1"></div>
+  <div class="floating-element floating-2"></div>
+  
+  <!-- Main Profile Card -->
+  <div class="modern-profile-card">
+    <!-- Header Section -->
+    <div class="profile-header">
+      <div class="header-background"></div>
+      <div class="header-content">
+        <div class="brand-section">
+          <div class="app-icon">
+            <mat-icon>health_and_safety</mat-icon>
+          </div>
+          <div class="brand-text">
+            <h1>SkinAI</h1>
+            <p>AI-Powered Detection</p>
+          </div>
         </div>
-        <div class="profile-icon">
-          <mat-icon>medical_services</mat-icon>
+        <div class="profile-info">
+          <h2>Complete Your Profile</h2>
+          <p>Help us personalize your skin health journey</p>
         </div>
       </div>
-  
-      <mat-card-content>
-        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    </div>
 
-  
-          <!-- Professional Information Section -->
-          <div class="form-section">
-            <h3 class="section-title">Professional Information</h3>
+    <!-- Progress Indicator -->
+    <div class="progress-section">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="getFormProgress()"></div>
+      </div>
+      <p class="progress-text">{{ getFormProgress() }}% Complete</p>
+    </div>
 
-            <mat-form-field appearance="fill" class="elevated-field">
-                <mat-label>Full Name</mat-label>
-                <input matInput formControlName="user_name" required>
-                <mat-icon matSuffix>person</mat-icon>
-                <mat-error *ngIf="userNameControl?.hasError('required')">
-                  Full name is required
-                </mat-error>
-              </mat-form-field>
-            
-            <mat-form-field appearance="fill" class="elevated-field">
-                <mat-label>Date of Birth</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="dob" required>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <mat-error *ngIf="dobControl?.hasError('required')">
-                  Date of Birth is required
-                </mat-error>
-              </mat-form-field>
-              
-          </div>
-  
-          <!-- Contact Information Section -->
-          <div class="form-section">
-            <h3 class="section-title">Contact Information</h3>
-            
-            <mat-form-field appearance="fill" class="elevated-field">
-              <mat-label>Contact Number</mat-label>
-              <input matInput type="tel" formControlName="contact" required>
-              <mat-icon matSuffix>contact_phone</mat-icon>
-              <mat-hint>Include country code if applicable</mat-hint>
-              <mat-error *ngIf="contactControl?.hasError('required')">
-                Contact number is mandatory
-              </mat-error>
-              <mat-error *ngIf="contactControl?.hasError('pattern')">
-                Please enter a valid phone number
-              </mat-error>
-            </mat-form-field>
-          </div>
-  
-          <!-- Form Actions -->
-          <div class="form-actions">
-            <button 
-              mat-raised-button 
-              class="submit-button"
-              type="submit"
-              [disabled]="profileForm.invalid || isSubmitting">
-              <span *ngIf="!isSubmitting">Complete Profile</span>
-              <span *ngIf="isSubmitting">
-                <mat-spinner diameter="20"></mat-spinner>
-                Processing...
-              </span>
-            </button>
-          </div>
-  
-          <!-- Error Message -->
-          <div *ngIf="errorMessage" class="error-message">
-            <div class="error-content">
-              <mat-icon class="error-icon">error_outline</mat-icon>
-              <div class="error-text">{{ errorMessage }}</div>
+    <!-- Form Content -->
+    <div class="form-content">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Personal Information Section -->
+        <div class="form-section personal-info">
+          <div class="section-header">
+            <div class="section-icon">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="section-title-group">
+              <h3>Personal Information</h3>
+              <p>Tell us about yourself</p>
             </div>
           </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
+
+          <div class="form-grid">
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" class="modern-field">
+                <mat-label>Full Name</mat-label>
+                <input matInput formControlName="user_name" required>
+                <mat-icon matSuffix>person_outline</mat-icon>
+                <mat-error *ngIf="userNameControl?.hasError('required')">
+                  Please enter your full name
+                </mat-error>
+              </mat-form-field>
+            </div>
+            
+            <div class="form-field-wrapper">
+              <mat-form-field appearance="outline" class="modern-field">
+                <mat-label>Date of Birth</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dob" required readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                  <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="dobControl?.hasError('required')">
+                  Please select your date of birth
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="form-section contact-info">
+          <div class="section-header">
+            <div class="section-icon">
+              <mat-icon>contact_phone</mat-icon>
+            </div>
+            <div class="section-title-group">
+              <h3>Contact Information</h3>
+              <p>How can we reach you?</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field-wrapper full-width">
+              <mat-form-field appearance="outline" class="modern-field">
+                <mat-label>Contact Number</mat-label>
+                <input matInput type="tel" formControlName="contact" required placeholder="+1 (555) 123-4567">
+                <mat-icon matSuffix>phone</mat-icon>
+                <mat-hint>Include country code for international numbers</mat-hint>
+                <mat-error *ngIf="contactControl?.hasError('required')">
+                  Please enter your contact number
+                </mat-error>
+                <mat-error *ngIf="contactControl?.hasError('pattern')">
+                  Please enter a valid phone number
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security & Privacy Notice -->
+        <div class="security-notice">
+          <div class="notice-icon">
+            <mat-icon>security</mat-icon>
+          </div>
+          <div class="notice-content">
+            <h4>Your Privacy Matters</h4>
+            <p>All personal information is encrypted and stored securely. We never share your data with third parties.</p>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button 
+            mat-flat-button 
+            class="modern-submit-btn"
+            type="submit"
+            [disabled]="profileForm.invalid || isSubmitting">
+            <div class="btn-content">
+              <mat-icon *ngIf="!isSubmitting">arrow_forward</mat-icon>
+              <mat-spinner diameter="20" *ngIf="isSubmitting"></mat-spinner>
+              <span>{{ isSubmitting ? 'Setting Up Profile...' : 'Complete Profile' }}</span>
+            </div>
+          </button>
+          
+          <div class="action-info">
+            <mat-icon>info_outline</mat-icon>
+            <span>You can update this information anytime in settings</span>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="error-alert">
+          <div class="alert-icon">
+            <mat-icon>error_outline</mat-icon>
+          </div>
+          <div class="alert-content">
+            <h4>Unable to Save Profile</h4>
+            <p>{{ errorMessage }}</p>
+          </div>
+          <button mat-icon-button class="alert-close" (click)="errorMessage = null">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
+</div>

@@ -19,22 +19,31 @@
         </p>
       </div>
 
-      <div class="result-details">
-        <h4>Lesion Type: {{ lesionType }}</h4>
-        <div class="description">
-          <p>{{ results?.description || "No description available" }}</p>
+      <div class="info-grid">
+        <div class="result-details">
+          <h4>
+            <mat-icon>science</mat-icon>
+            Lesion Type
+          </h4>
+          <p class="lesion-type">{{ lesionType }}</p>
+          <div class="description">
+            <p>{{ results?.description || "No description available" }}</p>
+          </div>
         </div>
-      </div>
 
-      <div class="recommendation">
-        <mat-icon>medical_services</mat-icon>
-        <p>
-          {{
-            results?.is_benign
-              ? "No immediate treatment needed, but regular monitoring is recommended"
-              : "Please consult a dermatologist for further evaluation"
-          }}
-        </p>
+        <div class="recommendation">
+          <h4>
+            <mat-icon>medical_services</mat-icon>
+            Recommendation
+          </h4>
+          <p>
+            {{
+              results?.is_benign
+                ? "No immediate treatment needed, but regular monitoring is recommended"
+                : "Please consult a dermatologist for further evaluation"
+            }}
+          </p>
+        </div>
       </div>
 
       <div class="actions">
@@ -85,7 +94,7 @@
                 mat-flat-button
                 color="primary"
                 class="consult-btn"
-                [routerLink]="['/doctor-consultation', doctor.id]"
+                [routerLink]="['/doctor-consultation', doctor.user_id]"
               >
                 <mat-icon>forum</mat-icon>
                 Consult Now

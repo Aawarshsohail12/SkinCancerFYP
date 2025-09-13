@@ -34,7 +34,7 @@ import { RouterModule } from '@angular/router';
 })
 export class DoctorConsultationComponent implements OnInit {
   doctor: any;
-  currentPatientId!: number;
+  currentPatientId!: string;
   existingAppointment: any | null = null;
   isRatingRequired: boolean = false;
   isLoading: boolean = false;
@@ -51,9 +51,9 @@ export class DoctorConsultationComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const doctorId = +this.route.snapshot.params['id'];
+      const doctorId = this.route.snapshot.params['id'];
       this.loadDoctorProfile(doctorId);
-      this.currentPatientId = this.authService.getCurrentUserId() || 0;
+      this.currentPatientId = this.authService.getCurrentUserId() || '';
       
       if (this.currentPatientId) {
         this.loadAppointments(doctorId);
@@ -75,11 +75,17 @@ export class DoctorConsultationComponent implements OnInit {
     }
   }
 
-  private loadDoctorProfile(doctorId: number): void {
+  private loadDoctorProfile(doctorId: string): void {
     this.isLoading = true;
     this.errorMessage = null;
+    console.log('Loading doctor profile for ID:', doctorId);
     this.profileService.getDoctorProfile(doctorId).subscribe({
       next: (doctor) => {
+        console.log('Doctor profile received:', doctor);
+        console.log('Doctor profile JSON:', JSON.stringify(doctor, null, 2));
+        console.log('Doctor ID field:', doctor?.id);
+        console.log('Doctor _id field:', doctor?._id);
+        console.log('Doctor user_id field:', doctor?.user_id);
         this.doctor = doctor;
         this.isLoading = false;
       },
@@ -91,7 +97,7 @@ export class DoctorConsultationComponent implements OnInit {
     });
   }
 
-  private loadAppointments(doctorId: number): void {
+  private loadAppointments(doctorId: string): void {
     this.isLoading = true;
     this.appointmentService.getPatientDoctorAppointments(
       this.currentPatientId, 
@@ -129,9 +135,17 @@ export class DoctorConsultationComponent implements OnInit {
       return;
     }
 
+    console.log('Opening booking dialog. Doctor object:', this.doctor);
+    console.log('Doctor ID:', this.doctor?.id);
+    console.log('Doctor user_id:', this.doctor?.user_id);
+
+    // Use user_id if id is not available
+    const doctorId = this.doctor?.id || this.doctor?.user_id;
+    console.log('Final doctor ID to use:', doctorId);
+
     const dialogRef = this.dialog.open(BookingModalComponent, {
       width: '400px',
-      data: { doctorId: this.doctor.id }
+      data: { doctorId: doctorId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -143,10 +157,11 @@ export class DoctorConsultationComponent implements OnInit {
 
   private createAppointment(appointmentData: any): void {
     this.isLoading = true;
+    const doctorId = this.doctor?.id || this.doctor?.user_id;
     const newAppointment = {
       ...appointmentData,
       patient_id: this.currentPatientId,
-      doctor_id: this.doctor.id
+      doctor_id: doctorId
     };
 
     this.appointmentService.createAppointment(newAppointment).subscribe({

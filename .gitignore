@@ -39,6 +39,29 @@ yarn-error.log
 testem.log
 /typings
 
+# Python/Backend
+api/skin-cancer-detection-backend/env/
+api/skin-cancer-detection-backend/__pycache__/
+api/skin-cancer-detection-backend/app/__pycache__/
+api/skin-cancer-detection-backend/app/**/*.pyc
+api/skin-cancer-detection-backend/*.db
+api/skin-cancer-detection-backend/*.sqlite3
+api/skin-cancer-detection-backend/*.h5
+api/skin-cancer-detection-backend/*.tflite
+api/skin-cancer-detection-backend/static/uploads/
+api/skin-cancer-detection-backend/uploads/
+
+# Frontend build output
+skin-cancer-detection-frontend/dist/
+skin-cancer-detection-frontend/.angular/
+skin-cancer-detection-frontend/.env
+
+# System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
 # System files
 .DS_Store
 Thumbs.db

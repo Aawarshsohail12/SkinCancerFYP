@@ -1,75 +1,208 @@
 <div class="app-container">
-  <header class="navbar">
+  <header class="modern-navbar">
+    <!-- Mobile menu toggle -->
+    <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" *ngIf="isAuthenticated$ | async">
+      <mat-icon>{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
+
     <!-- Logo / Title -->
-    <div class="navbar-title">
-      <h1>SkinAI</h1>
-      <span class="subtitle">Detection Assistant</span>
+    <div class="navbar-brand">
+      <div class="logo-container">
+        <mat-icon class="app-logo">medical_services</mat-icon>
+        <div class="brand-text">
+          <h1>SkinAI</h1>
+          <span class="tagline">AI-Powered Detection</span>
+        </div>
+      </div>
     </div>
 
-    <!-- Navigation Tabs - Different options based on role -->
-    <div class="nav-tabs" *ngIf="isAuthenticated$ | async">
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav" *ngIf="isAuthenticated$ | async">
       <!-- Show for patients and doctors -->
       <ng-container *ngIf="(userRole$ | async) !== 'researcher'">
-        <button mat-stroked-button routerLink="/analyze" routerLinkActive="active" class="nav-tab">
+        <a routerLink="/analyze" routerLinkActive="active" class="nav-link">
           <mat-icon>search</mat-icon>
-          Analyze
-        </button>
-        <button mat-stroked-button routerLink="/doctor-appointments-cards" routerLinkActive="active" class="nav-tab">
+          <span>Analyze</span>
+        </a>
+        <a routerLink="/doctor-appointments-cards" routerLinkActive="active" class="nav-link">
           <mat-icon>calendar_today</mat-icon>
-          Appointments
-        </button>
+          <span>Appointments</span>
+        </a>
       </ng-container>
       
       <!-- Show only for researchers -->
       <ng-container *ngIf="(userRole$ | async) === 'researcher'">
-        <button mat-stroked-button routerLink="/prediction-history" routerLinkActive="active" class="nav-tab">
+        <a routerLink="/prediction-history" routerLinkActive="active" class="nav-link">
           <mat-icon>assessment</mat-icon>
-          Predictions
-        </button>
-        <button mat-stroked-button (click)="logout()" class="nav-tab logout-tab">
-          <mat-icon>logout</mat-icon>
-          Logout
-        </button>
+          <span>Predictions</span>
+        </a>
       </ng-container>
+    </nav>
+
+    <!-- User Actions -->
+    <div class="user-actions" *ngIf="isAuthenticated$ | async">
+      <!-- Profile for non-researchers -->
+      <div class="profile-section" *ngIf="(userRole$ | async) !== 'researcher'">
+        <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="profile-button">
+          <div class="profile-avatar">
+            <mat-icon>account_circle</mat-icon>
+          </div>
+        </button>
+        <mat-menu #profileMenu="matMenu" class="profile-dropdown" xPosition="before">
+          <div class="profile-header">
+            <div class="profile-avatar-large">
+              <mat-icon>account_circle</mat-icon>
+            </div>
+            <div class="profile-details">
+              <div class="profile-name">{{ getUsername(userEmail$ | async) }}</div>
+              <div class="profile-role">{{ userRole$ | async | titlecase }}</div>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="openProfile()" class="menu-item">
+            <mat-icon>person</mat-icon>
+            <span>Profile Settings</span>
+          </button>
+          <button mat-menu-item (click)="logout()" class="menu-item logout-item">
+            <mat-icon>logout</mat-icon>
+            <span>Sign Out</span>
+          </button>
+        </mat-menu>
+      </div>
+
+      <!-- Logout for researchers -->
+      <button mat-flat-button (click)="logout()" class="logout-button" *ngIf="(userRole$ | async) === 'researcher'">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
     </div>
 
-    <!-- Profile Icon (Right) - Only show for non-researchers -->
-    <div class="profile-section" *ngIf="(isAuthenticated$ | async) && (userRole$ | async) !== 'researcher'">
-      <button mat-stroked-button [matMenuTriggerFor]="profileMenu" class="profile-button">
-        <mat-icon class="user-icon">account_circle</mat-icon>
-      </button>
-      <mat-menu #profileMenu="matMenu" class="profile-dropdown">
-        <div class="profile-header">
-          <mat-icon>account_circle</mat-icon>
-          <div class="profile-info">
-            <div class="username">{{ getUsername(userEmail$ | async) }}</div>
-            <div class="user-role">{{ userRole$ | async | titlecase }}</div>
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" [class.open]="isMobileMenuOpen" *ngIf="isAuthenticated$ | async">
+      <nav class="mobile-nav">
+        <!-- Show for patients and doctors -->
+        <ng-container *ngIf="(userRole$ | async) !== 'researcher'">
+          <a routerLink="/analyze" routerLinkActive="active" class="mobile-nav-link" (click)="closeMobileMenu()">
+            <mat-icon>search</mat-icon>
+            <span>Analyze</span>
+          </a>
+          <a routerLink="/doctor-appointments-cards" routerLinkActive="active" class="mobile-nav-link" (click)="closeMobileMenu()">
+            <mat-icon>calendar_today</mat-icon>
+            <span>Appointments</span>
+          </a>
+        </ng-container>
+        
+        <!-- Show only for researchers -->
+        <ng-container *ngIf="(userRole$ | async) === 'researcher'">
+          <a routerLink="/prediction-history" routerLinkActive="active" class="mobile-nav-link" (click)="closeMobileMenu()">
+            <mat-icon>assessment</mat-icon>
+            <span>Predictions</span>
+          </a>
+        </ng-container>
+
+        <!-- Mobile Profile Section -->
+        <div class="mobile-profile-section" *ngIf="(userRole$ | async) !== 'researcher'">
+          <div class="mobile-profile-info">
+            <div class="mobile-profile-avatar">
+              <mat-icon>account_circle</mat-icon>
+            </div>
+            <div class="mobile-profile-details">
+              <div class="mobile-profile-name">{{ getUsername(userEmail$ | async) }}</div>
+              <div class="mobile-profile-role">{{ userRole$ | async | titlecase }}</div>
+            </div>
           </div>
+          <button mat-stroked-button (click)="openProfile(); closeMobileMenu()" class="mobile-profile-action">
+            <mat-icon>person</mat-icon>
+            <span>Profile Settings</span>
+          </button>
         </div>
-        <mat-divider></mat-divider>
-        <button mat-menu-item (click)="openProfile()">
-          <mat-icon>edit</mat-icon>
-          <span>Update Profile</span>
-        </button>
-        <button mat-menu-item (click)="logout()">
+
+        <!-- Mobile Logout -->
+        <button mat-flat-button (click)="logout(); closeMobileMenu()" class="mobile-logout-button">
           <mat-icon>logout</mat-icon>
-          <span>Logout</span>
+          <span>Sign Out</span>
         </button>
-      </mat-menu>
+      </nav>
     </div>
   </header>
 
-  <main>
+  <main class="main-content">
     <router-outlet></router-outlet>
   </main>
 
-  <footer class="professional-footer">
-    <div class="footer-content">
-      <p>For educational purposes only. Consult a healthcare professional for medical advice.</p>
-      <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Contact Us</a>
+  <footer class="modern-footer">
+    <div class="footer-container">
+      <div class="footer-content">
+        <div class="footer-section brand-section">
+          <div class="footer-logo">
+            <mat-icon>medical_services</mat-icon>
+            <span class="footer-brand">SkinAI</span>
+          </div>
+          <p class="footer-description">
+            Advanced AI-powered skin cancer detection for early diagnosis and better health outcomes.
+          </p>
+          <div class="footer-social">
+            <button mat-icon-button class="social-btn">
+              <mat-icon>facebook</mat-icon>
+            </button>
+            <button mat-icon-button class="social-btn">
+              <mat-icon>language</mat-icon>
+            </button>
+            <button mat-icon-button class="social-btn">
+              <mat-icon>email</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="footer-section links-section">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#accuracy">Accuracy & Research</a></li>
+            <li><a href="#support">Support</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section links-section">
+          <h4>Legal</h4>
+          <ul class="footer-links">
+            <li><a href="#privacy">Privacy Policy</a></li>
+            <li><a href="#terms">Terms of Service</a></li>
+            <li><a href="#disclaimer">Medical Disclaimer</a></li>
+            <li><a href="#cookies">Cookie Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section contact-section">
+          <h4>Contact</h4>
+          <div class="contact-info">
+            <div class="contact-item">
+              <mat-icon>email</mat-icon>
+              <span>support&#64;skinai.com</span>
+            </div>
+            <div class="contact-item">
+              <mat-icon>phone</mat-icon>
+              <span>+1 (555) 123-4567</span>
+            </div>
+            <div class="contact-item">
+              <mat-icon>location_on</mat-icon>
+              <span>123 Medical Center Dr</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <mat-divider class="footer-divider"></mat-divider>
+
+      <div class="footer-bottom">
+        <div class="footer-copyright">
+          <p>&copy; 2024 SkinAI. All rights reserved.</p>
+        </div>
+        <div class="footer-disclaimer">
+          <mat-icon class="warning-icon">warning</mat-icon>
+          <p>For educational purposes only. Always consult healthcare professionals for medical advice.</p>
+        </div>
       </div>
     </div>
   </footer>

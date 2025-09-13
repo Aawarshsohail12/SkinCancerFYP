@@ -23,7 +23,7 @@ export class DoctorAppointmentsCardsComponent implements OnInit, OnDestroy, Afte
   userRole$: Observable<string | null>;
   showModal = false;
   currentPrediction: PredictionHistory | null = null;
-  currentPredictionId: number | null = null;
+  currentPredictionId: string | null = null;  // Changed to string
   isLoading = false;
   error: string | null = null;
   baseUrl = environment.apiUrl;
@@ -58,7 +58,7 @@ export class DoctorAppointmentsCardsComponent implements OnInit, OnDestroy, Afte
   }
 
   fetchAppointments(): void {
-    const userId = this.authService.getCurrentUserId() || 0;
+    const userId = this.authService.getCurrentUserId() || '';
     this.authService.userRole$.pipe(take(1)).subscribe(role => {
       if (role === 'doctor') {
         this.appointmentService.getDoctorAppointments(userId).subscribe((data) => {
@@ -72,13 +72,13 @@ export class DoctorAppointmentsCardsComponent implements OnInit, OnDestroy, Afte
     });
   }
 
-  confirmAppointment(appointmentId: number): void {
+  confirmAppointment(appointmentId: string): void {  // Changed to string
     this.appointmentService.updateAppointmentStatus(appointmentId, "book").subscribe(() => {
       this.fetchAppointments(); // Refresh the appointments after confirming
     });
   }
 
-  cancelAppointment(appointmentId: number): void {
+  cancelAppointment(appointmentId: string): void {  // Changed to string
     this.appointmentService.updateAppointmentStatus(appointmentId, "cancel").subscribe(() => {
       this.fetchAppointments();
     });
@@ -141,7 +141,7 @@ export class DoctorAppointmentsCardsComponent implements OnInit, OnDestroy, Afte
   }
   
   // Replace your existing openPredictionModal method:
-  openPredictionModal(predictionId: number): void {
+  openPredictionModal(predictionId: string): void {  // Changed to string
     this.showModal = true;
     this.isLoading = true;
     this.error = null;

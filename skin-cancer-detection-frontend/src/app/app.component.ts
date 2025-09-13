@@ -5,7 +5,7 @@ import { AuthService } from './services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 
@@ -16,7 +16,6 @@ import { MatDividerModule } from '@angular/material/divider';
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
     RouterModule,
     MatIconModule,
     MatButtonModule,
@@ -29,6 +28,7 @@ export class AppComponent {
   isAuthenticated$: Observable<boolean>;
   userEmail$: Observable<string | null>;
   userRole$: Observable<string | null>;
+  isMobileMenuOpen = false;
 
   constructor(
     private authService: AuthService,
@@ -41,6 +41,14 @@ export class AppComponent {
 
   getUsername(email: string | null): string {
     return email?.split('@')[0] || 'User';
+  }
+
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen = false;
   }
 
   openProfile(): void {
@@ -56,5 +64,6 @@ export class AppComponent {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
+    this.closeMobileMenu();
   }
 }
