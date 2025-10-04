@@ -12,6 +12,9 @@ class Settings(BaseSettings):
         "http://localhost",
         "http://localhost:4200",
         "https://skin-cancer-detection-production-3d57.up.railway.app",
+        "https://*.onrender.com",  # Allow all Render subdomains
+        # Add your specific Render URL here after deployment:
+        # "https://your-service-name.onrender.com",
     ]
     
     EMAIL_USER: Optional[str] = None

@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: skin-cancer-detection-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.16
+      - key: MONGO_URI
+        value: mongodb+srv://skincancer:skincancerdb@skincancer.oihitsl.mongodb.net/
+      - key: MONGO_DB_NAME
+        value: skin_cancer
+      - key: SECRET_KEY
+        generateValue: true
+    healthCheckPath: /
