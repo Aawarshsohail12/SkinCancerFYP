@@ -1,3 +1,11 @@
+<div *ngIf="appointments.length === 0" class="no-appointments-message">
+  <svg class="empty-icon" viewBox="0 0 24 24" width="48" height="48">
+    <path d="M19,3H5C3.9,3 3,3.9 3,5v14c0,1.1 0.9,2 2,2h14c1.1,0 2,-0.9 2,-2V5C21,3.9 20.1,3 19,3M19,19H5V5h14V19M7,7h10v2H7V7M7,11h10v2H7V11M7,15h5v2H7V15Z"/>
+  </svg>
+  <h3 class="empty-title">No Appointments</h3>
+  <p class="empty-description">You don't have any appointments at the moment. Check back later or create a new appointment.</p>
+</div>
+
 <div *ngFor="let appointment of appointments" class="appointment-card" 
      [class.pending]="appointment.status === 'pending'"
      [class.booked]="appointment.status === 'book' || 'rate'"
@@ -132,13 +140,5 @@
       <div class="loading-spinner"></div>
       <p>Loading prediction results...</p>
     </div>
-    
-    <!-- <div class="modal-content error" *ngIf="error">
-      <svg class="error-icon" viewBox="0 0 24 24" width="48" height="48">
-        <path d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z"/>
-      </svg>
-      <p>{{ error }}</p>
-      <button class="retry-button" (click)="openPredictionModal(currentPredictionId)">Try Again</button>
-    </div> -->
   </div>
 </div>

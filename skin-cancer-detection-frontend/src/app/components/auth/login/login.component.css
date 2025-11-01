@@ -185,23 +185,69 @@
 }
 
 ::ng-deep .modern-field .mat-mdc-form-field-flex {
-  background: rgba(30, 30, 46, 0.6) !important;
+  background: transparent !important;
   border-radius: 12px !important;
   padding: 0.75rem 1rem !important;
-  border: 1px solid rgba(66, 165, 245, 0.2) !important;
+  border: none !important;
   transition: all 0.3s ease !important;
 }
 
 ::ng-deep .modern-field .mat-mdc-form-field-flex:hover {
-  background: rgba(30, 30, 46, 0.8) !important;
-  border-color: rgba(66, 165, 245, 0.4) !important;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 ::ng-deep .modern-field.mat-focused .mat-mdc-form-field-flex {
-  background: rgba(30, 30, 46, 0.9) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Style the outline notch instead */
+::ng-deep .modern-field .mdc-notched-outline {
+  border-color: rgba(66, 165, 245, 0.2) !important;
+  border-radius: 12px !important;
+}
+
+::ng-deep .modern-field .mdc-notched-outline__leading {
+  border-radius: 12px 0 0 12px !important;
+  border-color: rgba(66, 165, 245, 0.2) !important;
+  width: 12px !important;
+}
+
+::ng-deep .modern-field .mdc-notched-outline__trailing {
+  border-radius: 0 12px 12px 0 !important;
+  border-color: rgba(66, 165, 245, 0.2) !important;
+}
+
+::ng-deep .modern-field .mdc-notched-outline__notch {
+  border-color: rgba(66, 165, 245, 0.2) !important;
+}
+
+::ng-deep .modern-field:hover .mdc-notched-outline {
+  border-color: rgba(66, 165, 245, 0.4) !important;
+}
+
+::ng-deep .modern-field.mat-focused .mdc-notched-outline,
+::ng-deep .modern-field.mat-focused .mdc-notched-outline__leading,
+::ng-deep .modern-field.mat-focused .mdc-notched-outline__notch,
+::ng-deep .modern-field.mat-focused .mdc-notched-outline__trailing {
   border-color: #42a5f5 !important;
-  box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.2) !important;
+}
+
+/* Input container background */
+::ng-deep .modern-field .mdc-text-field {
+  background: rgba(30, 30, 46, 0.6) !important;
+  border-radius: 12px !important;
+}
+
+::ng-deep .modern-field:hover .mdc-text-field {
+  background: rgba(30, 30, 46, 0.8) !important;
+}
+
+::ng-deep .modern-field.mat-focused .mdc-text-field {
+  background: rgba(30, 30, 46, 0.9) !important;
 }
 
 ::ng-deep .modern-field .mat-mdc-form-field-label {
@@ -213,9 +259,42 @@
   color: #42a5f5 !important;
 }
 
+/* Ensure label floats when field has content */
+::ng-deep .modern-field .mdc-floating-label--float-above {
+  color: #9aa0a6 !important;
+  font-size: 0.75rem !important;
+  top: -0.5em !important;
+  transform: translateY(0) !important;
+}
+
+::ng-deep .modern-field.mat-focused .mdc-floating-label--float-above {
+  color: #42a5f5 !important;
+  font-size: 0.75rem !important;
+  top: -0.5em !important;
+  transform: translateY(0) !important;
+}
+
+/* Fix label color for filled/prefilled inputs */
+::ng-deep .modern-field .mat-mdc-input-element:not(:placeholder-shown) ~ .mat-mdc-floating-label,
+::ng-deep .modern-field .mat-mdc-input-element:-webkit-autofill ~ .mat-mdc-floating-label {
+  color: #9aa0a6 !important;
+  top: -0.7em !important;
+  font-size: 0.75em !important;
+}
+
 ::ng-deep .modern-field .mat-mdc-input-element {
   color: #ffffff !important;
   font-weight: 500 !important;
+}
+
+/* Autofill styling */
+::ng-deep .modern-field .mat-mdc-input-element:-webkit-autofill,
+::ng-deep .modern-field .mat-mdc-input-element:-webkit-autofill:hover,
+::ng-deep .modern-field .mat-mdc-input-element:-webkit-autofill:focus,
+::ng-deep .modern-field .mat-mdc-input-element:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px rgba(30, 30, 46, 0.9) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
 }
 
 /* Placeholder styling for better visibility */

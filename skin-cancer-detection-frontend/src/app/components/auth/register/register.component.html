@@ -32,7 +32,7 @@
         <div class="form-field-wrapper">
           <mat-form-field appearance="outline" class="modern-field">
             <mat-label>Email Address</mat-label>
-            <input matInput formControlName="email" type="email" required autocomplete="email" placeholder="Enter your email address">
+            <input matInput formControlName="email" type="email" required autocomplete="email">
             <mat-icon matSuffix>email</mat-icon>
             <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
               Email is required
@@ -48,24 +48,8 @@
           <mat-form-field appearance="outline" class="modern-field">
             <mat-label>I am a...</mat-label>
             <mat-select formControlName="role" required>
-              <mat-option value="patient">
-                <div class="role-option">
-                  <mat-icon>person</mat-icon>
-                  <div class="role-info">
-                    <span class="role-title">Patient</span>
-                    <span class="role-desc">Get AI-powered skin analysis</span>
-                  </div>
-                </div>
-              </mat-option>
-              <mat-option value="doctor">
-                <div class="role-option">
-                  <mat-icon>medical_services</mat-icon>
-                  <div class="role-info">
-                    <span class="role-title">Doctor</span>
-                    <span class="role-desc">Review patient consultations</span>
-                  </div>
-                </div>
-              </mat-option>
+              <mat-option value="patient">Patient</mat-option>
+              <mat-option value="doctor">Doctor</mat-option>
             </mat-select>
             <mat-icon matSuffix>arrow_drop_down</mat-icon>
             <mat-error *ngIf="registerForm.get('role')?.hasError('required')">
@@ -78,7 +62,7 @@
         <div class="form-field-wrapper">
           <mat-form-field appearance="outline" class="modern-field">
             <mat-label>Password</mat-label>
-            <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required autocomplete="new-password" placeholder="Create a secure password">
+            <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required autocomplete="new-password">
             <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
               <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>

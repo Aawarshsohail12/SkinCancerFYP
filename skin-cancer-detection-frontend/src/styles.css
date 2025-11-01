@@ -67,6 +67,22 @@ a:focus-visible {
   background: transparent !important;
 }
 
+/* Material Form Field label styling */
+::ng-deep .mdc-floating-label {
+  color: #9aa0a6 !important;
+}
+
+::ng-deep .mdc-floating-label--float-above {
+  top: -0.5em !important;
+  transform: translateY(0) !important;
+  font-size: 0.75rem !important;
+  color: #9aa0a6 !important;
+}
+
+::ng-deep .mat-focused .mdc-floating-label--float-above {
+  color: #42a5f5 !important;
+}
+
 /* Ensure proper text rendering */
 body {
   -webkit-font-smoothing: antialiased;
