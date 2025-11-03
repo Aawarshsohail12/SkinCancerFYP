@@ -3,11 +3,11 @@ const path = require('path');
 const app = express();
 
 // Serve static files from the Angular app build directory
-app.use(express.static(path.join(__dirname, 'dist/skin-cancer-detection-frontend/browser')));
+app.use(express.static(path.join(__dirname, 'dist/skin-cancer-detection-frontend')));
 
 // Handle Angular routing - send all requests to index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/skin-cancer-detection-frontend/browser/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/skin-cancer-detection-frontend/index.html'));
 });
 
 // Start the server
