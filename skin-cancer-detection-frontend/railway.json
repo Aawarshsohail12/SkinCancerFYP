@@ -1,23 +1,9 @@
 {
-    "build": {
-      "buildCommand": "npm install && npm run build",
-      "startCommand": "npm start"
-    },
-    "deploy": {
-      "target": "production"
-    },
-    "services": [
-      {
-        "name": "frontend",
-        "type": "frontend",
-        "env": {
-          "PORT": "8080"
-        },
-        "build": {
-          "buildCommand": "npm install && npm run build",
-          "outputPath": "dist/skin-cancer-detection-frontend/browser"
-        },
-        "startCommand": "npm start"
-      }
-    ]
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "npm start"
   }
+}

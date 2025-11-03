@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://skin-cancer-detection-production.up.railway.app' // Your FastAPI backend URL
+    apiUrl: 'https://skin-cancer-backend.up.railway.app' // Your FastAPI backend URL
   };
