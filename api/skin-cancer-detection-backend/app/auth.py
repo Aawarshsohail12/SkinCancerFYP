@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
 from typing import Optional, Union, Dict, Any, List
-from fastapi import APIRouter, Depends, HTTPException, status, Body, UploadFile, File, Form, Query, Request
+from fastapi import APIRouter, Depends, HTTPException, status, Body, UploadFile, File, Form, Query, Request, BackgroundTasks
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import jwt, JWTError
 import random
+import asyncio
 from passlib.context import CryptContext
 import os
 import yagmail
@@ -114,14 +115,18 @@ async def verify_code_dependency(
 @router.post("/send-verification")
 async def send_verification(
     request: schemas.EmailRequest,
+    background_tasks: BackgroundTasks,
 ):
+    """Generate a verification code and send the email in a non-blocking background task.
+
+    Sending the email is dispatched to the background to avoid blocking the request/response
+    cycle which can cause client/proxy timeouts (manifesting as 499 errors).
+    """
     if await crud.get_user(email=request.email):
         raise HTTPException(status_code=400, detail="Email already registered")
-    
+
     code = generate_verification_code(request.email)
-    EMAIL_USER = os.getenv("EMAIL_USER")
-    EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
-    yag = yagmail.SMTP(user=EMAIL_USER, password=EMAIL_PASSWORD)
+
     subject = "Verification Code - Skin Cancer Detection App"
     body = f"""
         Dear User,
@@ -133,17 +138,24 @@ async def send_verification(
         Regards,
         Skin Cancer Detection Team
     """
+
+    # Synchronous yagmail send function (will be executed in a thread)
+    def _send_email_sync(to_email: str, subj: str, contents: str):
+        EMAIL_USER = os.getenv("EMAIL_USER")
+        EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+        yag = yagmail.SMTP(user=EMAIL_USER, password=EMAIL_PASSWORD)
+        yag.send(to=to_email, subject=subj, contents=contents)
+
+    # Schedule the blocking send in a thread so it doesn't block the event loop
     try:
-        yag.send(
-            to=request.email,
-            subject=subject,
-            contents=body
-        )
+        background_tasks.add_task(asyncio.to_thread, _send_email_sync, request.email, subject, body)
     except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail=f"Failed to send verification email: {e}")
-    print(f"Verification code for {request.email}: {code}")
-    return {"message": "Verification code sent"}
+        # If scheduling fails, log and return 500
+        print('Failed to schedule verification email send:', e)
+        raise HTTPException(status_code=500, detail=f"Failed to queue verification email: {e}")
+
+    print(f"Queued verification code for {request.email}: {code}")
+    return {"message": "Verification code queued"}
 
 @router.post("/verify-code")
 async def verify_code(

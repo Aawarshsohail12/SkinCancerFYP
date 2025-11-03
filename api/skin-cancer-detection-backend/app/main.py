@@ -1,39 +1,29 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException, Form
+from fastapi import FastAPI, UploadFile, File, HTTPException, Form, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from datetime import datetime
 from contextlib import asynccontextmanager
 import os
-import logging
 
 from app.schemas import PredictionResult
 from app.models import load_model_h5, predict
 from app.config import settings
 from app.database import get_collection, connect_to_mongo, close_mongo_connection
-from app.memory_db import init_sample_data
 from app.auth import router as auth_router
-
-# Setup logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 model = None
 
 # Startup and shutdown lifecycle
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Connect to MongoDB (or fallback to memory DB)
+    # Connect to MongoDB
     await connect_to_mongo()
-    # Initialize sample data if using memory DB
-    await init_sample_data()
     # Load ML model
     global model
     model = load_model_h5()
-    logger.info("🚀 Application startup complete")
     yield
     # Close MongoDB connection
     await close_mongo_connection()
-    logger.info("🛑 Application shutdown complete")
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -42,6 +32,26 @@ app = FastAPI(
     version=settings.api_version,
     lifespan=lifespan
 )
+
+
+@app.middleware("http")
+async def log_request_time(request: Request, call_next):
+    import time
+    start = time.time()
+    try:
+        response = await call_next(request)
+        return response
+    except Exception as e:
+        # Log exception and re-raise so FastAPI handles it
+        print(f"Request {request.method} {request.url.path} raised exception: {e}")
+        raise
+    finally:
+        duration = time.time() - start
+        try:
+            status_code = response.status_code
+        except Exception:
+            status_code = 'N/A'
+        print(f"{request.method} {request.url.path} completed_in={duration:.3f}s status={status_code}")
 
 # Configure CORS
 app.add_middleware(
