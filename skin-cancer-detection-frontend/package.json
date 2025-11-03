@@ -6,7 +6,8 @@
     "build": "ng build --configuration production",
     "start": "node server.js",
     "serve": "ng serve",
-    "dev": "ng serve"
+    "dev": "ng serve",
+    "postinstall": "npm cache clean --force || true"
   },
   "dependencies": {
     "@angular/animations": "^19.2.6",
