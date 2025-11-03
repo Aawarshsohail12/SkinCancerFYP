@@ -42,5 +42,8 @@ ENV PATH=/root/.local/bin:$PATH \
 # Expose port
 EXPOSE 8000
 
+# Create a startup script
+RUN echo '#!/bin/sh\nuvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}' > /app/start.sh && chmod +x /app/start.sh
+
 # Run application
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["/app/start.sh"]
