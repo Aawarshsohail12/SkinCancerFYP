@@ -153,7 +153,7 @@
             <div class="form-field-wrapper full-width">
               <mat-form-field appearance="outline" class="modern-field">
                 <mat-label>Contact Number</mat-label>
-                <input matInput type="tel" formControlName="contact" required placeholder="+1 (555) 123-4567">
+                <input matInput type="tel" formControlName="contact" required>
                 <mat-icon matSuffix>phone</mat-icon>
                 <mat-hint>Include country code for international numbers</mat-hint>
                 <mat-error *ngIf="contactControl?.hasError('required')">
@@ -212,6 +212,56 @@
           </button>
         </div>
       </form>
+
+      <!-- Patient Details Section -->
+      <div *ngIf="showPatientDetails && patientsList.length > 0" class="form-section patients-section">
+        <div class="section-header">
+          <div class="section-icon">
+            <mat-icon>people</mat-icon>
+          </div>
+          <div class="section-title-group">
+            <h3>My Patients</h3>
+            <p>Patients with appointments</p>
+          </div>
+        </div>
+
+        <div class="patients-grid">
+          <div *ngFor="let patient of patientsList" class="patient-card">
+            <div class="patient-info">
+              <div class="patient-header">
+                <mat-icon class="patient-icon">person</mat-icon>
+                <div class="patient-name">{{ patient.user_name }}</div>
+              </div>
+              
+              <div class="patient-details">
+                <div class="detail-item" *ngIf="patient.email">
+                  <mat-icon>email</mat-icon>
+                  <span>{{ patient.email }}</span>
+                </div>
+                <div class="detail-item" *ngIf="patient.contact">
+                  <mat-icon>phone</mat-icon>
+                  <span>{{ patient.contact }}</span>
+                </div>
+                <div class="detail-item" *ngIf="patient.dob">
+                  <mat-icon>cake</mat-icon>
+                  <span>{{ patient.dob | date:'MMM d, yyyy' }}</span>
+                </div>
+                <div class="detail-item">
+                  <mat-icon>event</mat-icon>
+                  <span>{{ patient.appointmentCount }} appointment{{ patient.appointmentCount !== 1 ? 's' : '' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="patients-actions">
+          <button mat-stroked-button (click)="navigateToAppointments()">
+            <mat-icon>calendar_today</mat-icon>
+            View All Appointments
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

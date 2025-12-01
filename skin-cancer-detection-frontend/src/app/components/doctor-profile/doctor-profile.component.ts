@@ -14,6 +14,18 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { ProfileService } from '../../services/profile.service';
 import { AuthService } from '../../services/auth.service';
+import { AppointmentService } from '../../services/appointment.service';
+import { Appointment } from '../../models/appointment.model';
+
+// Patient summary interface
+interface PatientSummary {
+  id: string;
+  user_name: string;
+  email?: string;
+  contact?: string;
+  dob?: string;
+  appointmentCount: number;
+}
 
 @Component({
   selector: 'app-doctor-profile',
@@ -39,6 +51,10 @@ export class DoctorProfileComponent implements OnInit {
   errorMessage: string | null = null;
   imagePreview: string | ArrayBuffer | null = null;
   selectedImage!: File;
+  
+  // Patient details properties
+  showPatientDetails = false;
+  patientsList: PatientSummary[] = [];
 
   specialties = [
     'Cardiology',
@@ -60,6 +76,7 @@ export class DoctorProfileComponent implements OnInit {
     private fb: FormBuilder,
     private profileService: ProfileService,
     private authService: AuthService,
+    private appointmentService: AppointmentService,
     private router: Router
   ) {
     this.profileForm = this.fb.group({
@@ -73,6 +90,7 @@ export class DoctorProfileComponent implements OnInit {
 
   ngOnInit() {
     this.checkExistingProfile();
+    this.loadPatientDetails();
   }
 
   private checkExistingProfile() {
@@ -191,4 +209,50 @@ export class DoctorProfileComponent implements OnInit {
   get hospital() { return this.hospitalControl; }
   get years_experience() { return this.yearsExperienceControl; }
   get contact() { return this.contactControl; }
+
+  // Patient details methods
+  private loadPatientDetails(): void {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) return;
+
+    this.appointmentService.getDoctorAppointments(userId).subscribe({
+      next: (appointments: Appointment[]) => {
+        this.processPatientData(appointments);
+        this.showPatientDetails = true;
+      },
+      error: (err) => {
+        console.error('Error loading patient details:', err);
+      }
+    });
+  }
+
+  private processPatientData(appointments: Appointment[]): void {
+    const patientMap = new Map<string, PatientSummary>();
+
+    appointments.forEach(appointment => {
+      if (appointment.patient) {
+        const patientId = appointment.patient.id;
+        if (patientMap.has(patientId)) {
+          const existing = patientMap.get(patientId)!;
+          existing.appointmentCount++;
+        } else {
+          patientMap.set(patientId, {
+            id: appointment.patient.id,
+            user_name: appointment.patient.user_name,
+            email: appointment.patient.email,
+            contact: appointment.patient.contact,
+            dob: appointment.patient.dob,
+            appointmentCount: 1
+          });
+        }
+      }
+    });
+
+    this.patientsList = Array.from(patientMap.values())
+      .sort((a, b) => b.appointmentCount - a.appointmentCount);
+  }
+
+  navigateToAppointments(): void {
+    this.router.navigate(['/doctor-appointments-cards']);
+  }
 }

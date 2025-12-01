@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     SMTP_SERVER: Optional[str] = None
     SMTP_PORT: Optional[int] = None
     FROM_EMAIL: Optional[str] = None
-    MONGO_URI: str = "mongodb+srv://skincancer:skincancerdb@skincancer.oihitsl.mongodb.net/"  # Default MongoDB URI
+    MONGO_URI: str = "mongodb+srv://skincancer:skincancerdb@skincancer.wbiyzff.mongodb.net/"  # Default MongoDB URI
     MONGO_DB_NAME: str = "skin_cancer"  # Default database name
 
     class Config:

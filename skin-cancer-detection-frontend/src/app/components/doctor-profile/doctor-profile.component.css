@@ -430,15 +430,63 @@
 }
 
 .modern-field .mat-mdc-form-field-label {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mdc-floating-label {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mdc-floating-label--float-above {
+  color: #ffffff !important;
 }
 
 .modern-field.mat-focused .mat-mdc-form-field-label {
   color: #42a5f5 !important;
 }
 
+::ng-deep .modern-field.mat-focused .mdc-floating-label {
+  color: #42a5f5 !important;
+}
+
+::ng-deep .modern-field.mat-focused .mdc-floating-label--float-above {
+  color: #42a5f5 !important;
+}
+
 .modern-field input, .modern-field .mat-mdc-select-value {
-  color: white !important;
+  color: #ffffff !important;
+  background: transparent !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Ensure all input elements have white text */
+::ng-deep .modern-field .mat-mdc-input-element {
+  color: #ffffff !important;
+  background: transparent !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Fix autofill styling */
+::ng-deep .modern-field input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: transparent !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+::ng-deep .modern-field input:-webkit-autofill:hover {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+::ng-deep .modern-field input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+::ng-deep .modern-field input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 /* Placeholder styling for better visibility */
@@ -802,6 +850,139 @@
   }
 }
 
+/* Additional input text color enforcement */
+::ng-deep .modern-field .mat-mdc-form-field-infix {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mat-mdc-form-field-infix input {
+  color: #ffffff !important;
+  caret-color: #42a5f5 !important;
+}
+
+/* Override any potential browser defaults */
+::ng-deep .modern-field input[type="text"],
+::ng-deep .modern-field input[type="email"],
+::ng-deep .modern-field input[type="tel"],
+::ng-deep .modern-field input[type="password"] {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+/* Additional input text color enforcement */
+::ng-deep .modern-field .mat-mdc-form-field-infix {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mat-mdc-form-field-infix input {
+  color: #ffffff !important;
+  caret-color: #42a5f5 !important;
+}
+
+/* Patients Section Styling */
+.patients-section {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, rgba(66, 165, 245, 0.05), rgba(25, 118, 210, 0.05));
+  border: 1px solid rgba(66, 165, 245, 0.15);
+}
+
+.patients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.patient-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.patient-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.patient-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(66, 165, 245, 0.2);
+}
+
+.patient-icon {
+  color: #42a5f5;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.patient-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.patient-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.detail-item mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #42a5f5;
+}
+
+.detail-item span {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.patients-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(66, 165, 245, 0.2);
+}
+
+.patients-actions button {
+  background: transparent !important;
+  border: 1px solid #42a5f5 !important;
+  color: #42a5f5 !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.patients-actions button:hover {
+  background: rgba(66, 165, 245, 0.1) !important;
+  box-shadow: 0 4px 12px rgba(66, 165, 245, 0.3) !important;
+}
+
+.patients-actions button mat-icon {
+  margin-right: 0.5rem;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   .floating-element,
@@ -813,7 +994,53 @@
   .modern-profile-card,
   .form-section,
   .modern-field .mat-mdc-text-field-wrapper,
-  .modern-submit-btn {
+  .modern-submit-btn,
+  .patient-card {
     transition: none;
   }
+}
+
+/* Responsive design for patient cards */
+@media (max-width: 768px) {
+  .patients-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .patient-card {
+    padding: 1rem;
+  }
+  
+  .patients-actions {
+    margin-top: 1rem;
+  }
+}
+
+/* Comprehensive Material Design label overrides */
+::ng-deep .modern-field .mat-mdc-form-field-label-wrapper {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mat-mdc-form-field-label-wrapper .mat-mdc-form-field-label {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mdc-text-field__input {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field label {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mdc-notched-outline__leading,
+::ng-deep .modern-field .mdc-notched-outline__notch,
+::ng-deep .modern-field .mdc-notched-outline__trailing {
+  border-color: rgba(66, 165, 245, 0.2) !important;
+}
+
+::ng-deep .modern-field.mat-focused .mdc-notched-outline__leading,
+::ng-deep .modern-field.mat-focused .mdc-notched-outline__notch,
+::ng-deep .modern-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: #42a5f5 !important;
 }

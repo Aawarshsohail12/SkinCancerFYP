@@ -14,9 +14,10 @@ export interface AppointmentBase {
     _id: string;  // MongoDB ObjectId as string
     patient_id: string;
     status: 'pending' | 'book' | 'rate' | 'cancel';
-    doctor: Doctor;
-    patient: Patient;
+    doctor?: Doctor;
+    patient?: Patient;
     prediction_id?: string;
+    created_at?: string;
   }
   
   export interface Doctor {
@@ -34,5 +35,7 @@ export interface AppointmentBase {
   export interface Patient {
     id: string;
     user_name: string;
-    // Add other patient fields as needed
+    dob: string;
+    contact: string;
+    email?: string; // Added from Users table
   }

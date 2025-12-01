@@ -59,14 +59,42 @@ export class DoctorAppointmentsCardsComponent implements OnInit, OnDestroy, Afte
 
   fetchAppointments(): void {
     const userId = this.authService.getCurrentUserId() || '';
+    console.log('Fetching appointments for user:', userId);
+    
     this.authService.userRole$.pipe(take(1)).subscribe(role => {
+      console.log('User role:', role);
+      
       if (role === 'doctor') {
-        this.appointmentService.getDoctorAppointments(userId).subscribe((data) => {
-          this.appointments = data;
+        this.appointmentService.getDoctorAppointments(userId).subscribe({
+          next: (data) => {
+            console.log('Doctor appointments received:', data);
+            this.appointments = data;
+            
+            // Debug: Check if patient data is included
+            data.forEach((appointment, index) => {
+              console.log(`Appointment ${index}:`, appointment);
+              if (appointment.patient) {
+                console.log(`Patient data for appointment ${index}:`, appointment.patient);
+              } else {
+                console.log(`No patient data for appointment ${index}`);
+              }
+            });
+          },
+          error: (err) => {
+            console.error('Error fetching doctor appointments:', err);
+            this.error = 'Failed to load appointments';
+          }
         });
       } else if (role === 'patient') {
-        this.appointmentService.getPatientAppointments(userId).subscribe((data) => {
-          this.appointments = data;
+        this.appointmentService.getPatientAppointments(userId).subscribe({
+          next: (data) => {
+            console.log('Patient appointments received:', data);
+            this.appointments = data;
+          },
+          error: (err) => {
+            console.error('Error fetching patient appointments:', err);
+            this.error = 'Failed to load appointments';
+          }
         });
       }
     });

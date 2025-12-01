@@ -321,17 +321,64 @@
 }
 
 ::ng-deep .modern-field .mat-mdc-form-field-label {
-  color: #9aa0a6 !important;
+  color: #ffffff !important;
   font-weight: 500 !important;
+}
+
+::ng-deep .modern-field .mdc-floating-label {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mdc-floating-label--float-above {
+  color: #ffffff !important;
 }
 
 ::ng-deep .modern-field.mat-focused .mat-mdc-form-field-label {
   color: #42a5f5 !important;
 }
 
+::ng-deep .modern-field.mat-focused .mdc-floating-label {
+  color: #42a5f5 !important;
+}
+
+::ng-deep .modern-field.mat-focused .mdc-floating-label--float-above {
+  color: #42a5f5 !important;
+}
+
 ::ng-deep .modern-field .mat-mdc-input-element {
   color: #ffffff !important;
   font-weight: 500 !important;
+  background: transparent !important;
+}
+
+/* Ensure input text is always white */
+::ng-deep .modern-field input {
+  color: #ffffff !important;
+  background: transparent !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Fix autofill styling */
+::ng-deep .modern-field input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: transparent !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+::ng-deep .modern-field input:-webkit-autofill:hover {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+::ng-deep .modern-field input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+::ng-deep .modern-field input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 /* Placeholder styling for better visibility */
@@ -635,4 +682,33 @@
     padding: 1rem;
     margin-bottom: 1.5rem;
   }
+}
+
+/* Comprehensive Material Design label overrides */
+::ng-deep .modern-field .mat-mdc-form-field-label-wrapper {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mat-mdc-form-field-label-wrapper .mat-mdc-form-field-label {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mdc-text-field__input {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field label {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mdc-notched-outline__leading,
+::ng-deep .modern-field .mdc-notched-outline__notch,
+::ng-deep .modern-field .mdc-notched-outline__trailing {
+  border-color: rgba(66, 165, 245, 0.2) !important;
+}
+
+::ng-deep .modern-field.mat-focused .mdc-notched-outline__leading,
+::ng-deep .modern-field.mat-focused .mdc-notched-outline__notch,
+::ng-deep .modern-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: #42a5f5 !important;
 }

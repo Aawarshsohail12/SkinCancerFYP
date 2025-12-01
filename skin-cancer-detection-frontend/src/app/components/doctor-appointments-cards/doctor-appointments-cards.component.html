@@ -16,7 +16,19 @@
   <div class="card-content">
     <div class="card-header">
       <div class="appointment-meta">
-        <span class="patient-id">#{{appointment.patient_id}}</span>
+        <!-- Show patient name for doctors -->
+        <span class="patient-name" *ngIf="appointment.patient && (userRole$ | async) === 'doctor'">
+          <mat-icon class="meta-icon">person</mat-icon>
+          {{appointment.patient.user_name}}
+        </span>
+        <!-- Show doctor name for patients -->
+        <span class="doctor-name" *ngIf="appointment.doctor && (userRole$ | async) === 'patient'">
+          <mat-icon class="meta-icon">local_hospital</mat-icon>
+          Dr. {{appointment.doctor.user_name}}
+        </span>
+        <!-- Fallback IDs -->
+        <span class="patient-id" *ngIf="!appointment.patient && (userRole$ | async) === 'doctor'">#{{appointment.patient_id}}</span>
+        <span class="doctor-id" *ngIf="!appointment.doctor && (userRole$ | async) === 'patient'">#{{appointment.doctor_id}}</span>
         <span class="appointment-date">{{appointment.date_time | date:'MMM d, y, h:mm a'}}</span>
       </div>
       <div class="status-pill" 
@@ -28,7 +40,105 @@
       </div>
     </div>
 
-    <h3 class="appointment-title">{{appointment.notes || 'Medical Appointment'}}</h3>
+    <!-- Appointment type indicator -->
+    <div class="appointment-type" *ngIf="(userRole$ | async) !== 'doctor'">
+      <mat-icon>medical_services</mat-icon>
+      <span>{{appointment.notes || 'Medical Appointment'}}</span>
+    </div>
+
+
+
+    <!-- Enhanced Patient Details Section (for doctors) -->
+    <div class="patient-info-card" *ngIf="appointment.patient && (userRole$ | async) === 'doctor'">
+      <div class="patient-header">
+        <div class="patient-avatar">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+        <div class="patient-basic-info">
+          <h4 class="patient-full-name">{{appointment.patient.user_name}}</h4>
+          <p class="patient-id-tag">Patient ID: {{appointment.patient.id}}</p>
+        </div>
+      </div>
+      
+      <div class="patient-details-grid">
+        <div class="detail-item">
+          <div class="detail-icon-wrapper">
+            <mat-icon class="detail-icon">email</mat-icon>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label">Email</span>
+            <span class="detail-value">{{appointment.patient.email || 'Not provided'}}</span>
+          </div>
+        </div>
+        
+        <div class="detail-item">
+          <div class="detail-icon-wrapper">
+            <mat-icon class="detail-icon">phone</mat-icon>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label">Phone</span>
+            <span class="detail-value">{{appointment.patient.contact || 'Not provided'}}</span>
+          </div>
+        </div>
+        
+        <div class="detail-item" *ngIf="appointment.patient.dob">
+          <div class="detail-icon-wrapper">
+            <mat-icon class="detail-icon">cake</mat-icon>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label">Date of Birth</span>
+            <span class="detail-value">{{appointment.patient.dob | date:'MMM d, yyyy'}}</span>
+          </div>
+        </div>
+        
+        <div class="detail-item">
+          <div class="detail-icon-wrapper">
+            <mat-icon class="detail-icon">schedule</mat-icon>
+          </div>
+          <div class="detail-content">
+            <span class="detail-label">Appointment</span>
+            <span class="detail-value">{{appointment.date_time | date:'MMM d, y @ h:mm a'}}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="patient-notes" *ngIf="appointment.notes">
+        <div class="notes-header">
+          <mat-icon>note</mat-icon>
+          <span>Appointment Notes</span>
+        </div>
+        <p class="notes-content">{{appointment.notes}}</p>
+      </div>
+    </div>
+
+    <!-- Doctor Details Section (for patients) -->
+    <div class="contact-details" *ngIf="appointment.doctor && (userRole$ | async) === 'patient'">
+      <h4 class="details-header">Doctor Information</h4>
+      <div class="detail-row">
+        <mat-icon class="detail-icon">local_hospital</mat-icon>
+        <span class="detail-text">{{appointment.doctor.specialty}}</span>
+      </div>
+      <div class="detail-row">
+        <mat-icon class="detail-icon">business</mat-icon>
+        <span class="detail-text">{{appointment.doctor.hospital}}</span>
+      </div>
+      <div class="detail-row">
+        <mat-icon class="detail-icon">email</mat-icon>
+        <span class="detail-text">{{appointment.doctor.email || 'No email provided'}}</span>
+      </div>
+      <div class="detail-row">
+        <mat-icon class="detail-icon">phone</mat-icon>
+        <span class="detail-text">{{appointment.doctor.contact || 'No contact provided'}}</span>
+      </div>
+      <div class="detail-row" *ngIf="appointment.doctor.years_experience">
+        <mat-icon class="detail-icon">work</mat-icon>
+        <span class="detail-text">{{appointment.doctor.years_experience}} years experience</span>
+      </div>
+      <div class="detail-row" *ngIf="appointment.doctor.rating">
+        <mat-icon class="detail-icon">star</mat-icon>
+        <span class="detail-text">Rating: {{appointment.doctor.rating}}/5</span>
+      </div>
+    </div>
 
     <div class="card-actions">
       <!-- Show confirm and cancel buttons for pending appointments - ONLY FOR DOCTORS -->
