@@ -1,22 +1,32 @@
 <div class="results-container">
-  <div class="results-column">
-    <div class="results-card">
+  <div class="results-card">
+    <div class="result-header">
       <h2>Analysis Results</h2>
+      <div class="result-actions">
+        <button mat-stroked-button color="primary" (click)="uploadNew()">
+          <mat-icon>cloud_upload</mat-icon>
+          Analyze Another
+        </button>
+      </div>
+    </div>
 
-      <div
-        class="result-summary"
+    <div class="result-content">
+      <div class="result-summary"
         [ngClass]="{
           benign: results?.is_benign,
           malignant: !results?.is_benign
-        }"
-      >
-        <mat-icon class="result-icon">
-          {{ results?.is_benign ? "check_circle" : "warning" }}
-        </mat-icon>
-        <h3>{{ results?.conclusion || "No conclusion available" }}</h3>
-        <p *ngIf="results?.confidence" class="confidence">
-          Confidence: {{ (results.confidence * 100).toFixed(2) }}%
-        </p>
+        }">
+        <div class="status-indicator">
+          <mat-icon class="result-icon">
+            {{ results?.is_benign ? "check_circle" : "warning" }}
+          </mat-icon>
+          <div class="status-text">
+            <h3>{{ results?.conclusion || "No conclusion available" }}</h3>
+            <p *ngIf="results?.confidence" class="confidence">
+              Confidence: {{ (results.confidence * 100).toFixed(2) }}%
+            </p>
+          </div>
+        </div>
       </div>
 
       <div class="info-grid">
@@ -47,62 +57,12 @@
       </div>
 
       <div class="actions">
-        <button mat-stroked-button color="primary" (click)="uploadNew()">
-          <mat-icon>cloud_upload</mat-icon>
-          Analyze Another Image
+        <button mat-raised-button color="primary" (click)="goToDoctorRecommendations()">
+          <mat-icon>local_hospital</mat-icon>
+          Find Specialists
         </button>
       </div>
     </div>
   </div>
 
-  <div class="doctors-column">
-    <div class="doctor-profiles-section">
-      <h2 class="section-title">Recommended Specialists</h2>
-      <div class="doctor-grid">
-        <div *ngFor="let doctor of doctors" class="doctor-card">
-          <div class="card-header">
-            <img
-              [src]="doctor.profile_image_url"
-              alt="Doctor"
-              class="doctor-avatar"
-            />
-            <div class="header-info">
-              <h3 class="doctor-name">{{ doctor.user_name }}</h3>
-              <p class="doctor-specialty">{{ doctor.specialty }}</p>
-              <div class="rating-badge">
-                <mat-icon>star</mat-icon>
-                <span>{{ doctor.rating }} ({{ doctor.appointments_count }})</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-body">
-            <div class="stats-row">
-              <div class="stat-item">
-                <mat-icon>work_history</mat-icon>
-                <span>{{ doctor.years_experience }} Years</span>
-              </div>
-            </div>
-
-            <div class="hospital-info">
-              <mat-icon>business</mat-icon>
-              <p>{{ doctor.hospital }}</p>
-            </div>
-
-            <div class="action-panel">
-              <button
-                mat-flat-button
-                color="primary"
-                class="consult-btn"
-                [routerLink]="['/doctor-consultation', doctor.user_id]"
-              >
-                <mat-icon>forum</mat-icon>
-                Consult Now
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

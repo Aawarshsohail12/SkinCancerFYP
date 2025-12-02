@@ -255,7 +255,7 @@
 
 /* Label styling - base state */
 ::ng-deep .modern-field .mdc-floating-label {
-  color: #9aa0a6 !important;
+  color: #ffffff !important;
   font-weight: 500 !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
@@ -264,7 +264,7 @@
 
 /* Label styling - floating state */
 ::ng-deep .modern-field .mdc-floating-label--float-above {
-  color: #9aa0a6 !important;
+  color: #ffffff !important;
   font-weight: 500 !important;
   top: -0.5em !important;
   transform: translateY(0) !important;
@@ -279,11 +279,28 @@
 
 /* Old label selector for compatibility */
 ::ng-deep .modern-field .mat-mdc-form-field-label {
-  color: #9aa0a6 !important;
+  color: #ffffff !important;
   font-weight: 500 !important;
 }
 
 ::ng-deep .modern-field.mat-focused .mat-mdc-form-field-label {
+  color: #42a5f5 !important;
+}
+
+/* Additional label selectors for Material Design */
+::ng-deep .modern-field .mat-mdc-floating-label {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field.mat-focused .mat-mdc-floating-label {
+  color: #42a5f5 !important;
+}
+
+::ng-deep .modern-field .mdc-text-field__label {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field.mat-focused .mdc-text-field__label {
   color: #42a5f5 !important;
 }
 

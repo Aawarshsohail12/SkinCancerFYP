@@ -55,10 +55,18 @@ export class BookingModalComponent {
     console.log('Doctor ID from data:', this.data?.doctorId);
     console.log('Route params:', this.route.snapshot.params);
     
+    // Check for analysis results from session storage
+    const analysisNotes = sessionStorage.getItem('appointmentNotes');
+    
     this.modalForm = this.fb.group({
       date_time: ['', Validators.required],
-      notes: [''] // Add notes to the FormGroup
+      notes: [analysisNotes || ''] // Pre-fill with analysis notes if available
     });
+
+    // Clear the session storage after using it
+    if (analysisNotes) {
+      sessionStorage.removeItem('appointmentNotes');
+    }
   }
 
   onCancel(): void {

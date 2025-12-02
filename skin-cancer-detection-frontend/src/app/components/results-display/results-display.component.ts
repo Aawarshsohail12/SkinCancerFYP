@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { DoctorService } from '../../services/doctor.service'; // Import your doctor service
-import { RouterModule } from '@angular/router';
+import { DoctorService } from '../../services/doctor.service';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-results-display',
@@ -15,16 +15,11 @@ import { RouterModule } from '@angular/router';
 export class ResultsDisplayComponent implements OnInit {
   @Input() results: any;
   @Output() newUpload = new EventEmitter<void>();
-  doctors: any[] = [];  // Store the doctor data
 
-  constructor(private doctorService: DoctorService) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    // Fetch the doctors data when the component initializes
-    this.doctorService.getAllDoctors().subscribe((response: any) => {
-      console.log("response",response)
-      this.doctors = response;  // Assuming the API response is an array of doctors
-    });
+    // No need to fetch doctors here anymore
   }
 
   get lesionType(): string {
@@ -44,8 +39,9 @@ export class ResultsDisplayComponent implements OnInit {
     this.newUpload.emit();
   }
 
-  logDoctorId(doctor: any): void {
-    console.log('Doctor object:', doctor);
-    console.log('Doctor ID:', doctor._id);
+  goToDoctorRecommendations(): void {
+    // Store the analysis results for use in doctor recommendations
+    sessionStorage.setItem('analysisResults', JSON.stringify(this.results));
+    this.router.navigate(['/doctor-recommendations']);
   }
 }

@@ -5,25 +5,12 @@
 /* Main Container */
 .results-container {
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: start;
-}
-
-.results-column {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
   display: flex;
-  flex-direction: column;
-  align-self: start;
-}
-
-.doctors-column {
-  display: flex;
-  flex-direction: column;
-  align-self: start;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 /* ============================================
@@ -31,6 +18,7 @@
    ============================================ */
 
 .results-card {
+  width: 100%;
   background: linear-gradient(145deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -815,4 +803,42 @@
     height: 44px;
     font-size: 0.9rem;
   }
+}
+
+/* New Styles for Single Card Layout */
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.result-header h2 {
+  margin: 0;
+}
+
+.result-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.result-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.status-text h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.status-text p {
+  margin: 0;
 }

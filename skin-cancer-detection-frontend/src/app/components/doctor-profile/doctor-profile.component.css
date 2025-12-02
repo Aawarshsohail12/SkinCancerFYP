@@ -1044,3 +1044,77 @@
 ::ng-deep .modern-field.mat-focused .mdc-notched-outline__trailing {
   border-color: #42a5f5 !important;
 }
+
+/* Select Field Specific Styling */
+::ng-deep .modern-field .mat-mdc-select {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mat-mdc-select-trigger {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mat-mdc-select-value {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mat-mdc-select-value-text {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mat-mdc-select-arrow {
+  color: #42a5f5 !important;
+}
+
+/* More specific targeting for selected value */
+::ng-deep .modern-field .mat-select-value {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mat-select-value-text {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mat-mdc-form-field .mat-mdc-select .mat-mdc-select-value {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mdc-text-field--filled .mat-mdc-select-value {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mdc-text-field--outlined .mat-mdc-select-value {
+  color: #ffffff !important;
+}
+
+/* Target the actual displayed text span */
+::ng-deep .modern-field .mat-mdc-select-min-line {
+  color: #ffffff !important;
+}
+
+::ng-deep .modern-field .mat-mdc-select-placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Select Panel Styling */
+::ng-deep .mat-mdc-select-panel {
+  background: rgba(15, 15, 30, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(66, 165, 245, 0.2) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+::ng-deep .mat-mdc-option {
+  color: #ffffff !important;
+  background: transparent !important;
+}
+
+::ng-deep .mat-mdc-option:hover {
+  background: rgba(66, 165, 245, 0.1) !important;
+}
+
+::ng-deep .mat-mdc-option.mdc-list-item--selected {
+  background: rgba(66, 165, 245, 0.2) !important;
+  color: #ffffff !important;
+}

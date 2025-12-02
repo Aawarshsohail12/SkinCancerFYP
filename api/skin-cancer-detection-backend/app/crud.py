@@ -141,8 +141,6 @@ async def get_appointments_by_patient_id(patient_id: str):
 
 
 async def get_appointments_for_doctor(doctor_id: str):
-    print(f"=== GET_APPOINTMENTS_FOR_DOCTOR CALLED - UPDATED VERSION ===")
-    print(f"Doctor ID: {doctor_id}")
     appointments = get_collection("appointments")
     patients = get_collection("patients")
     users = get_collection("users")
@@ -155,21 +153,15 @@ async def get_appointments_for_doctor(doctor_id: str):
         
         # Get patient details - patient_id in appointments is the user's ObjectId
         user_id = appointment["patient_id"]
-        print(f"Looking up patient for user ID: {user_id}")
         
         try:
             # First, get the patient profile using user_id
             patient = await patients.find_one({"user_id": user_id})
-            print(f"Found patient profile: {patient is not None}")
             
             # Get user details for email and name
             try:
                 patient_user = await users.find_one({"_id": ObjectId(user_id)})
-                print(f"Found user details: {patient_user is not None}")
-                if patient_user:
-                    print(f"User details: {patient_user}")
             except Exception as e:
-                print(f"Error converting user_id to ObjectId: {e}")
                 patient_user = None
             
             if patient and patient_user:
@@ -182,7 +174,6 @@ async def get_appointments_for_doctor(doctor_id: str):
                     "email": patient_user["email"]
                 }
                 appointment_dict["patient"] = patient_details
-                print(f"Added complete patient details: {patient_details}")
             elif patient_user:
                 # User exists but no patient profile
                 # Use email as name if user_name is not available
@@ -195,13 +186,10 @@ async def get_appointments_for_doctor(doctor_id: str):
                     "contact": None
                 }
                 appointment_dict["patient"] = patient_details
-                print(f"Added basic user details as patient: {patient_details}")
-            else:
-                print(f"No user found for ID: {user_id}")
                 
         except Exception as e:
-            print(f"Error in patient lookup for appointment {appointment['_id']}: {e}")
             # Continue without patient details for this appointment
+            pass
         except Exception as e:
             print(f"Error in patient lookup for appointment {appointment['_id']}: {e}")
             # Continue without patient details for this appointment

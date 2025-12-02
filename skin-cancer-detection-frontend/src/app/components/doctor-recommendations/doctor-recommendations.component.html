@@ -1,0 +1,90 @@
+<div class="recommendations-container">
+  <div class="page-header">
+    <button mat-icon-button (click)="goBack()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="header-content">
+      <h1>Recommended Specialists</h1>
+      <p>Based on your skin analysis, these dermatologists can provide professional consultation</p>
+    </div>
+  </div>
+
+  <!-- Analysis Summary Card -->
+  <div class="analysis-summary" *ngIf="analysisResults">
+    <div class="summary-header">
+      <mat-icon>assessment</mat-icon>
+      <h3>Your Analysis Summary</h3>
+    </div>
+    <div class="summary-content">
+      <div class="result-item">
+        <span class="label">Conclusion:</span>
+        <span class="value" [ngClass]="analysisResults.is_benign ? 'benign' : 'malignant'">
+          {{ analysisResults.conclusion }}
+        </span>
+      </div>
+      <div class="result-item">
+        <span class="label">Confidence:</span>
+        <span class="value">{{ (analysisResults.confidence * 100).toFixed(1) }}%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="loading-spinner"></div>
+    <p>Loading specialists...</p>
+  </div>
+
+  <!-- Doctors Grid -->
+  <div class="doctors-grid" *ngIf="!isLoading && doctors.length > 0">
+    <div class="doctor-card" *ngFor="let doctor of doctors">
+      <div class="card-header">
+        <img [src]="doctor.profile_image_url" alt="Dr. {{ doctor.user_name }}" class="doctor-avatar">
+        <div class="doctor-info">
+          <h3>Dr. {{ doctor.user_name }}</h3>
+          <p class="specialty">{{ doctor.specialty }}</p>
+          <div class="rating" *ngIf="doctor.rating">
+            <mat-icon>star</mat-icon>
+            <span>{{ doctor.rating }}/5</span>
+            <span class="appointment-count">({{ doctor.appointments_count || 0 }} consultations)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="details-grid">
+          <div class="detail-item">
+            <mat-icon>business</mat-icon>
+            <div>
+              <span class="detail-label">Hospital</span>
+              <span class="detail-value">{{ doctor.hospital }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>work_history</mat-icon>
+            <div>
+              <span class="detail-label">Experience</span>
+              <span class="detail-value">{{ doctor.years_experience }} years</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button mat-raised-button color="primary" 
+                (click)="bookAppointmentWithAnalysis(doctor.user_id)"
+                class="book-button">
+          <mat-icon>calendar_today</mat-icon>
+          Book Consultation
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Doctors State -->
+  <div class="no-doctors" *ngIf="!isLoading && doctors.length === 0">
+    <mat-icon>person_search</mat-icon>
+    <h3>No specialists available</h3>
+    <p>Please try again later or contact support.</p>
+  </div>
+</div>

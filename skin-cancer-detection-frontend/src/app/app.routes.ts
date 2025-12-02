@@ -8,6 +8,7 @@ import { PatientProfileComponent } from './components/patient-profile/patient-pr
 import { DoctorConsultationComponent } from './components/doctor-consultation/doctor-consultation.component';
 import { DoctorAppointmentsCardsComponent } from './components/doctor-appointments-cards/doctor-appointments-cards.component';
 import { PredictionHistoryComponent } from './components/prediction-history/prediction-history';
+import { DoctorRecommendationsComponent } from './components/doctor-recommendations/doctor-recommendations.component';
 
 export const routes: Routes = [
   { 
@@ -47,6 +48,11 @@ export const routes: Routes = [
   {
     path: 'prediction-history',
     component: PredictionHistoryComponent
+  },
+  {
+    path: 'doctor-recommendations',
+    component: DoctorRecommendationsComponent,
+    canActivate: [AuthGuard]
   },
   { 
     path: '**', 
